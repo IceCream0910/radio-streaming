@@ -65,6 +65,10 @@
   --md-sys-color-on-error: #690005;
   --md-sys-color-error-container: #93000a;
   --md-sys-color-on-error-container: #ffdad6;
+  --color-background: #1f1f1f;
+  --color-design: #FF906C;
+  --color-research: #EC75FF;
+  --radius: 340px;
 }
 
 * {
@@ -139,9 +143,13 @@ main {
 .player-header {
   display: flex;
   justify-content: space-between;
+  width: 100%;
   align-items: center;
   padding: 1.5em;
   height: 60px;
+  position: fixed;
+  top: 0;
+  z-index: 999;
 }
 
 .player-header-title {
@@ -152,16 +160,16 @@ main {
 
 .player-header-close {
   cursor: pointer;
+  font-size: 22px;
   color: rgb(var(--foreground-rgb));
 }
 
 .player-body {
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  justify-content: end;
   padding: 2rem;
-  height: 90%;
+  position: fixed;
+  bottom: 0;
+  z-index: 999;
+  overflow: hidden;
 }
 
 .player-body-title {
@@ -253,4 +261,86 @@ header {
 .region-select button.active {
   border-bottom: 2px solid #4cffba;
   opacity: 1;
+}
+
+
+.circles {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation-name: rotate;
+  animation-duration: 25s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  backface-visibility: hidden;
+  perspective: 1000;
+}
+
+.circle {
+  position: fixed;
+  bottom: 0;
+  width: 1px;
+  height: 1px;
+  margin: calc(var(--radius) / 2);
+  border-radius: 50%;
+  backface-visibility: hidden;
+  perspective: 1000;
+  opacity: .9;
+}
+
+.circle.design {
+  background: var(--color-design);
+  box-shadow: 0 0 var(--radius) var(--radius) var(--color-design);
+  animation-name: float;
+  animation-duration: 6s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.circle.research {
+  background: var(--color-research);
+  box-shadow: 0 0 var(--radius) var(--radius) var(--color-research);
+  animation-name: float;
+  animation-duration: 8s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate-reverse;
+}
+
+@keyframes float {
+  0% {
+    transform: translateX(calc(var(--radius) * 0.0)) translateZ(0)
+  }
+
+  20% {
+    transform: translateX(calc(var(--radius) * 0.5)) translateZ(0)
+  }
+
+  40% {
+    transform: translateX(calc(var(--radius) * 1.0)) translateZ(0)
+  }
+
+  60% {
+    transform: translateX(calc(var(--radius) * 1.5)) translateZ(0)
+  }
+
+  80% {
+    transform: translateX(calc(var(--radius) * 0.5)) translateZ(0)
+  }
+
+  100% {
+    transform: translateX(calc(var(--radius) * 0.0)) translateZ(0)
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg) translateZ(0)
+  }
+
+  100% {
+    transform: rotate(360deg) translateZ(0)
+  }
 }

@@ -67,13 +67,13 @@ const HlsPlayer = () => {
             bodyStyle={{ backgroundColor: '#1f1f1f', borderRadius: '20px 20px 0 0' }}
             style={isOpen ? { backgroundColor: '#1f1f1f', borderRadius: '20px', bottom: '0' } : { backgroundColor: '#1f1f1f', borderRadius: '20px', bottom: '60px' }}
             overflowHeight={60}>
-            <div style={{ height: '90dvh' }}>
+            <div style={{ height: '95dvh' }}>
                 <div className='player-header'>
                     <div className='player-header-title' onClick={() => setIsOpen(true)}>
                         {player && (!isOpen ? player.title : '지금 재생 중')}
-                        {!player && '재생 중인 스테이션 없음'}
+                        {player == [] && '재생 중인 스테이션 없음'}
                     </div>
-                    {!isOpen &&
+                    {!isOpen && player &&
                         <div className='player-header-close' onClick={() => setIsPlaying(!isPlaying)}>
                             {isPlaying ? <IonIcon name='pause' /> : <IonIcon name='play' />}
                         </div>
@@ -92,6 +92,10 @@ const HlsPlayer = () => {
                     </div>
                 }
 
+                {isOpen && <div className="circles">
+                    <div className="circle research"></div>
+                    <div className="circle design"></div>
+                </div>}
 
                 <video autoPlay style={{ display: 'none' }}
                     ref={videoRef} />

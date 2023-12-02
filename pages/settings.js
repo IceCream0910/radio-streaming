@@ -1,10 +1,5 @@
 "use client"
 import React, { useState, useRef, useEffect } from 'react'
-import '@material/web/button/filled-button.js';
-import '@material/web/button/outlined-button.js';
-import '@material/web/checkbox/checkbox.js';
-import '@material/web/select/filled-select';
-import '@material/web/switch/switch.js';
 import Head from 'next/head';
 
 const Settings = () => {
