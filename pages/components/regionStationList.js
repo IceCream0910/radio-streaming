@@ -1,4 +1,4 @@
-import radioData from '../utils/radioStations'
+import radioData from '../data/radioStations'
 
 export default function RegionStationList({ region, playFunc }) {
 
