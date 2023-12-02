@@ -63,7 +63,8 @@ const HlsPlayer = ({ data }) => {
             <div style={{ height: '90dvh' }}>
                 <div className='player-header'>
                     <div className='player-header-title' onClick={() => setIsOpen(true)}>
-                        {data && !isOpen ? data.title : '지금 재생 중'}
+                        {data && (!isOpen ? data.title : '지금 재생 중')}
+                        {!data && '재생 중인 스테이션 없음'}
                     </div>
                     {!isOpen &&
                         <div className='player-header-close' onClick={() => setIsPlaying(!isPlaying)}>
@@ -72,15 +73,17 @@ const HlsPlayer = ({ data }) => {
                     }
                 </div>
 
-                <div className='player-body'>
-                    <div className='player-body-title'>
-                        {data && data.title}
-                    </div>
-                    <div className='player-playpause-btn' onClick={() => setIsPlaying(!isPlaying)}>
-                        {isPlaying ? <IonIcon name='pause-circle' /> : <IonIcon name='play-circle' />}
-                    </div>
+                {data &&
+                    <div className='player-body'>
+                        <div className='player-body-title'>
+                            {data && data.title}
+                        </div>
+                        <div className='player-playpause-btn' onClick={() => setIsPlaying(!isPlaying)}>
+                            {isPlaying ? <IonIcon name='pause-circle' /> : <IonIcon name='play-circle' />}
+                        </div>
 
-                </div>
+                    </div>
+                }
 
 
                 <video autoPlay style={{ display: 'none' }}

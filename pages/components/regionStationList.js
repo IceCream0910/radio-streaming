@@ -1,6 +1,7 @@
-import radioData from '../data/radioStations'
+
 
 export default function RegionStationList({ region, playFunc }) {
+    const radioData = require('/public/radioStations.json');
 
     return (<>
 

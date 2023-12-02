@@ -1,4 +1,4 @@
-const radioData = [
+[
     {
         "title": "KBS 1라디오",
         "city": "seoul",
@@ -139,7 +139,6 @@ const radioData = [
         "city": "seoul",
         "url": "/api/stream?stn=afn&city=humphreys"
     },
-    //busan
     {
         "title": "KBS부산 1라디오",
         "city": "busan",
@@ -290,7 +289,6 @@ const radioData = [
         "city": "busan",
         "url": "/api/stream/?stn=kookbang"
     },
-    //daegu
     {
         "title": "KBS대구 1라디오",
         "city": "daegu",
@@ -416,7 +414,6 @@ const radioData = [
         "city": "daegu",
         "url": "/api/stream/?stn=afn&city=daegu"
     },
-    //gwangju
     {
         "title": "KBS광주 1라디오",
         "city": "gwangju",
@@ -537,7 +534,6 @@ const radioData = [
         "city": "gwangju",
         "url": "/api/stream?stn=kookbang"
     },
-    //jeonbuk
     {
         "title": "KBS전주 1라디오",
         "city": "jeonbuk",
@@ -603,7 +599,6 @@ const radioData = [
         "city": "jeonbuk",
         "url": "/api/stream?stn=afn&city=kunsan"
     },
-    //daejeon
     {
         "title": "KBS대전 1라디오",
         "city": "daejeon",
@@ -659,7 +654,6 @@ const radioData = [
         "city": "daejeon",
         "url": "/api/stream?stn=kookbang"
     },
-    //chungbuk
     {
         "title": "KBS청주 1라디오",
         "city": "chungbuk",
@@ -710,7 +704,6 @@ const radioData = [
         "city": "chungbuk",
         "url": "/api/stream?stn=kookbang"
     },
-    //gangwon
     {
         "title": "KBS춘천 1라디오",
         "city": "gangwon",
@@ -796,7 +789,6 @@ const radioData = [
         "city": "gangwon",
         "url": "/api/stream?stn=kookbang"
     },
-    //jeju
     {
         "title": "KBS제주 1라디오",
         "city": "jeju",
@@ -852,6 +844,4 @@ const radioData = [
         "city": "jeju",
         "url": "/api/stream?stn=kookbang"
     }
-];
-
-export default radioData;
+]
