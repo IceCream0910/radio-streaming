@@ -3,8 +3,12 @@ import Hls from 'hls.js';
 import SwipeableBottomSheet from 'react-swipeable-bottom-sheet';
 import IonIcon from '@reacticons/ionicons'
 import BottomNav from './bottomNav';
+import { useRecoilState } from 'recoil';
+import { playerData } from '../../states/states';
 
-const HlsPlayer = ({ data }) => {
+const HlsPlayer = () => {
+    const [player, setPlayer] = useRecoilState(playerData);
+
     const videoRef = useRef(null);
     const [isReady, setIsReady] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
@@ -15,30 +19,33 @@ const HlsPlayer = ({ data }) => {
     }, []);
 
     useEffect(() => {
-        if (Hls.isSupported() && data) {
+        console.log(player)
+        if (Hls.isSupported() && player) {
             const video = videoRef.current;
             const hls = new Hls();
 
-            hls.loadSource(data.url);
-            hls.attachMedia(video);
+            if (player && player.url) {
+                hls.loadSource(player.url.trim());
+                hls.attachMedia(video);
 
-            video.addEventListener('canplaythrough', () => {
-                video.play();
-                setIsPlaying(true);
-            });
-
-            if ('mediaSession' in navigator) {
-                navigator.mediaSession.metadata = new MediaMetadata({
-                    title: data.title || '제목없음',
-                    artist: '라디오'
+                video.addEventListener('canplaythrough', () => {
+                    video.play();
+                    setIsPlaying(true);
                 });
+
+                if ('mediaSession' in navigator) {
+                    navigator.mediaSession.metadata = new MediaMetadata({
+                        title: player.title || '제목없음',
+                        artist: '라디오'
+                    });
+                }
             }
 
             return () => {
                 hls.destroy();
             };
         }
-    }, [data]);
+    }, [player]);
 
     useEffect(() => {
         if (videoRef.current) {
@@ -63,8 +70,8 @@ const HlsPlayer = ({ data }) => {
             <div style={{ height: '90dvh' }}>
                 <div className='player-header'>
                     <div className='player-header-title' onClick={() => setIsOpen(true)}>
-                        {data && (!isOpen ? data.title : '지금 재생 중')}
-                        {!data && '재생 중인 스테이션 없음'}
+                        {player && (!isOpen ? player.title : '지금 재생 중')}
+                        {!player && '재생 중인 스테이션 없음'}
                     </div>
                     {!isOpen &&
                         <div className='player-header-close' onClick={() => setIsPlaying(!isPlaying)}>
@@ -73,10 +80,10 @@ const HlsPlayer = ({ data }) => {
                     }
                 </div>
 
-                {data &&
+                {player &&
                     <div className='player-body'>
                         <div className='player-body-title'>
-                            {data && data.title}
+                            {player && player.title}
                         </div>
                         <div className='player-playpause-btn' onClick={() => setIsPlaying(!isPlaying)}>
                             {isPlaying ? <IonIcon name='pause-circle' /> : <IonIcon name='play-circle' />}

@@ -2,15 +2,9 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import RegionStationList from './components/regionStationList';
-import HlsPlayer from './components/player';
 
 const IndexPage = () => {
   const [region, setRegion] = useState('seoul');
-  const [currentData, setCurrentData] = useState(null);
-
-  const playAudio = (data) => {
-    setCurrentData(data);
-  };
 
   const handleRegionChange = (event) => {
     setRegion(event.target.id);
@@ -27,12 +21,12 @@ const IndexPage = () => {
   return (
     <div>
       <Head>
-        <title>radio</title>
+        <title>스테이션</title>
       </Head>
 
       <main>
         <header>
-          <h2 style={{ width: '100%', textAlign: 'center', marginTop: '10px' }}>스테이션</h2>
+          <h2 style={{ width: '100%', textAlign: 'left', marginTop: '10px', marginLeft: '13px' }}>스테이션</h2>
           <div className="region-select">
             <button id="seoul" onClick={handleRegionChange} style={{ marginRight: '10px' }} className={region === 'seoul' ? 'active' : ''}>수도권</button>
             <button id="busan" onClick={handleRegionChange} style={{ marginRight: '10px' }} className={region === 'busan' ? 'active' : ''}>부산·울산·경남</button>
@@ -49,8 +43,9 @@ const IndexPage = () => {
 
 
         <div style={{ height: '100px' }} />
-        <RegionStationList region={region} playFunc={playAudio} />
-        <HlsPlayer data={currentData} />
+        <RegionStationList region={region} />
+
+
       </main>
     </div>
   );
