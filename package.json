@@ -9,8 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@reacticons/ionicons": "^7.1.0",
+    "hls.js": "^1.4.12",
+    "next": "14.0.3",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.0.3"
+    "react-swipeable-bottom-sheet": "^1.1.2"
   }
 }
