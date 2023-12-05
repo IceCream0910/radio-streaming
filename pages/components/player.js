@@ -13,46 +13,65 @@ const HlsPlayer = () => {
     const [isReady, setIsReady] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
+    const isNative = useRef(null);
 
     useEffect(() => {
         setIsReady(true);
+
+        const useragent = navigator.userAgent;
+        isNative.current = useragent.indexOf('AndroidNative') > -1;
     }, []);
 
     useEffect(() => {
         console.log(player)
-        if (Hls.isSupported() && player) {
-            const video = videoRef.current;
-            const hls = new Hls();
-
-            if (player && player.url) {
-                hls.loadSource(player.url.trim());
-                hls.attachMedia(video);
-
-                video.addEventListener('canplaythrough', () => {
-                    video.play();
-                    setIsPlaying(true);
-                });
-
-                if ('mediaSession' in navigator) {
-                    navigator.mediaSession.metadata = new MediaMetadata({
-                        title: player.title || '제목없음',
-                        artist: '라디오'
-                    });
-                }
+        if (isNative && player) {
+            try {
+                Native.play(player.url, player.title || "제목없음");
+                setIsPlaying(true);
+            } catch (error) {
+                console.log("native error:", error)
             }
+        } else {
+            if (Hls.isSupported() && player) {
+                const video = videoRef.current;
+                const hls = new Hls();
 
-            return () => {
-                hls.destroy();
-            };
+                if (player && player.url) {
+                    hls.loadSource(player.url.trim());
+                    hls.attachMedia(video);
+
+                    video.addEventListener('canplaythrough', () => {
+                        video.play();
+                        setIsPlaying(true);
+                    });
+
+                    if ('mediaSession' in navigator) {
+                        navigator.mediaSession.metadata = new MediaMetadata({
+                            title: player.title || '제목없음',
+                            artist: '라디오'
+                        });
+                    }
+                }
+
+                return () => {
+                    hls.destroy();
+                };
+            }
         }
     }, [player]);
 
     useEffect(() => {
-        if (videoRef.current) {
+        if (videoRef.current && !isNative) {
             if (isPlaying) {
                 videoRef.current.play();
             } else {
                 videoRef.current.pause();
+            }
+        } else if (isNative) {
+            if (isPlaying) {
+                Native.play(player.url, player.title || "제목없음");
+            } else {
+                Native.pause();
             }
         }
     }, [isPlaying]);
