@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useImperativeHandle, forwardRef } from 'react';
 import Hls from 'hls.js';
 import SwipeableBottomSheet from 'react-swipeable-bottom-sheet';
 import IonIcon from '@reacticons/ionicons'
@@ -6,14 +6,33 @@ import BottomNav from './bottomNav';
 import { useRecoilState } from 'recoil';
 import { playerData } from '../../states/states';
 
-const HlsPlayer = () => {
+const HlsPlayer = forwardRef((props, ref) => {
     const [player, setPlayer] = useRecoilState(playerData);
 
     const videoRef = useRef(null);
     const [isReady, setIsReady] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
+    const [isBuffering, setIsBuffering] = useState(false);
     const isNative = useRef(null);
+
+    const handleNativePlayerState = (state) => {
+        console.log("native state:", state)
+        if (state == 'playing') {
+            setIsPlaying(true);
+            setIsBuffering(false);
+        } else if (state == 'paused') {
+            setIsPlaying(false);
+            setIsBuffering(false);
+        } else if (state == 'buffer') {
+            setIsPlaying(false);
+            setIsBuffering(true);
+        }
+    };
+
+    useImperativeHandle(ref, () => ({
+        nativePlayerState: handleNativePlayerState,
+    }));
 
     useEffect(() => {
         setIsReady(true);
@@ -24,7 +43,7 @@ const HlsPlayer = () => {
 
     useEffect(() => {
         console.log(player)
-        if (isNative && player) {
+        if (isNative.current && player.url) {
             try {
                 Native.play(player.url, player.title || "제목없음");
                 setIsPlaying(true);
@@ -61,20 +80,24 @@ const HlsPlayer = () => {
     }, [player]);
 
     useEffect(() => {
-        if (videoRef.current && !isNative) {
+        if (videoRef.current && !isNative.current) {
             if (isPlaying) {
                 videoRef.current.play();
             } else {
                 videoRef.current.pause();
             }
-        } else if (isNative) {
-            if (isPlaying) {
-                Native.play(player.url, player.title || "제목없음");
+        }
+    }, [isPlaying]);
+
+    function setNativePlayerPlaying(is) {
+        if (isNative.current) {
+            if (is) {
+                Native.pause();
             } else {
                 Native.pause();
             }
         }
-    }, [isPlaying]);
+    }
 
     return (<>
 
@@ -93,7 +116,7 @@ const HlsPlayer = () => {
                         {player == [] && '재생 중인 스테이션 없음'}
                     </div>
                     {!isOpen && player &&
-                        <div className='player-header-close' onClick={() => setIsPlaying(!isPlaying)}>
+                        <div className='player-header-close' onClick={() => [setNativePlayerPlaying(isPlaying ? false : true), setIsPlaying(!isPlaying)]}>
                             {isPlaying ? <IonIcon name='pause' /> : <IonIcon name='play' />}
                         </div>
                     }
@@ -104,7 +127,7 @@ const HlsPlayer = () => {
                         <div className='player-body-title'>
                             {player && player.title}
                         </div>
-                        <div className='player-playpause-btn' onClick={() => setIsPlaying(!isPlaying)}>
+                        <div className='player-playpause-btn' onClick={() => [setNativePlayerPlaying(isPlaying ? false : true), setIsPlaying(!isPlaying)]}>
                             {isPlaying ? <IonIcon name='pause-circle' /> : <IonIcon name='play-circle' />}
                         </div>
 
@@ -127,6 +150,6 @@ const HlsPlayer = () => {
 
     </>
     );
-};
+});
 
 export default HlsPlayer;
