@@ -49,7 +49,7 @@ const HlsPlayer = forwardRef((props, ref) => {
     }, []);
 
     useEffect(() => {
-        console.log(player)
+        randomBackground();
         if (isNative.current && player.url) {
             try {
                 Native.play(player.url, player.title || "제목없음");
@@ -84,7 +84,26 @@ const HlsPlayer = forwardRef((props, ref) => {
                 };
             }
         }
+
     }, [player]);
+
+    function randomBackground() {
+        const colors = [
+            { design: '#ff9a9e', research: '#fad0c4' },
+            { design: '#a18cd1', research: '#fbc2eb' },
+            { design: '#ffecd2', research: '#fcb69f' },
+            { design: '#fbc2eb', research: '#a6c1ee' },
+            { design: '#84fab0', research: '#8fd3f4' },
+            { design: '#a1c4fd', research: '#c2e9fb' },
+            { design: '#30cfd0', research: '#330867' },
+            { design: '#9890e3', research: '#b1f4cf' },
+        ];
+        const randomIndex = Math.floor(Math.random() * colors.length);
+        const selectedColor = colors[randomIndex];
+
+        document.documentElement.style.setProperty('--color-design', selectedColor.design);
+        document.documentElement.style.setProperty('--color-research', selectedColor.research);
+    }
 
     useEffect(() => {
         if (videoRef.current && !isNative.current) {
@@ -150,8 +169,10 @@ const HlsPlayer = forwardRef((props, ref) => {
             style={isOpen ? { backgroundColor: '#1f1f1f', borderRadius: '20px', bottom: '0' } : { backgroundColor: '#1f1f1f', borderRadius: '20px', bottom: '60px' }}
             overflowHeight={60}>
             <div style={{ height: '95dvh' }}>
+                {isOpen &&
+                    <div className='bottom-sheet-handle'></div>}
                 <div className='player-header'>
-                    <div className='player-header-title' onClick={() => setIsOpen(true)}>
+                    <div className={isOpen ? 'player-header-title open' : 'player-header-title'} onClick={() => setIsOpen(true)}>
                         {player && (!isOpen ? player.title : '지금 재생 중')}
                         {player == [] && '재생 중인 스테이션 없음'}
                     </div>
@@ -168,14 +189,15 @@ const HlsPlayer = forwardRef((props, ref) => {
                             {player && player.title}
                         </div>
 
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '20px', justifyContent: 'space-between' }}>
                             <div className='player-playpause-btn' onClick={() => [setNativePlayerPlaying(isPlaying ? false : true), setIsPlaying(!isPlaying)]}>
-                                {isPlaying ? <IonIcon name='pause-circle' /> : <IonIcon name='play-circle' />}
+                                {isPlaying ? <IonIcon name='pause' /> : <IonIcon name='play' />}
                             </div>
 
-                            <div className='player-heart-btn' onClick={() => toggleFavorites(player.title)}>
+                            <div className={actualFavorites.includes(player.title) ? 'player-heart-btn active' : 'player-heart-btn'} onClick={() => toggleFavorites(player.title)}>
                                 {actualFavorites.includes(player.title) ? <IonIcon name='heart' /> : <IonIcon name='heart-outline' />}
                             </div>
+
                         </div>
 
                     </div>

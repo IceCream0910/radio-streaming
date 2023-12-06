@@ -1,5 +1,12 @@
 @import url("https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.1/packages/wanted-sans/fonts/webfonts/static/split/WantedSans.min.css");
 
+@font-face {
+  font-family: 'OAGothic-ExtraBold';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/OAGothic-ExtraBold.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+}
+
 :root {
   --max-width: 1100px;
   --border-radius: 12px;
@@ -152,10 +159,26 @@ main {
   z-index: 999;
 }
 
+.bottom-sheet-handle {
+  width: 60px;
+  height: 8px;
+  background-color: #ffffff50;
+  border-radius: 10px;
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 .player-header-title {
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: bold;
   width: 100%;
+}
+
+.player-header-title.open {
+  margin-top: 25px;
+  text-align: center;
 }
 
 .player-header-close {
@@ -170,20 +193,29 @@ main {
   bottom: 0;
   z-index: 999;
   overflow: hidden;
+  width: 100%;
 }
 
 .player-body-title {
   font-size: 2rem;
   font-weight: bold;
-  margin-left: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  font-family: "OAGothic-ExtraBold", -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+
 }
 
 .player-playpause-btn {
+  width: 45px;
+  height: 45px;
+  border-radius: 15px;
+  background-color: #ffffff2f;
   cursor: pointer;
-  font-size: 3rem;
+  font-size: 1.5rem;
   transition: all 0.2s ease-in-out;
-  color: #4cffba;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .player-playpause-btn:active {
@@ -191,15 +223,31 @@ main {
 }
 
 .player-heart-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #ffffff1c;
   cursor: pointer;
-  font-size: 2rem;
+  font-size: 1.3rem;
   transition: all 0.2s ease-in-out;
+  float: right;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .player-heart-btn:active {
   transform: scale(0.95);
 }
 
+.player-heart-btn.active {
+  color: #ce3838;
+}
+
+.player-body svg {
+  top: 0px;
+}
 
 .bottom-nav {
   display: flex;
@@ -299,7 +347,7 @@ header {
   border-radius: 50%;
   backface-visibility: hidden;
   perspective: 1000;
-  opacity: .9;
+  opacity: .5;
 }
 
 .circle.design {
