@@ -2,7 +2,7 @@ import IonIcon from '@reacticons/ionicons';
 import { useRecoilState } from 'recoil';
 import { playerData, favoritesData } from '../../states/states';
 import { useEffect, useState } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 
 export default function RegionStationList({ region, playFunc }) {
     const radioData = require('/public/radioStations.json');
@@ -16,7 +16,7 @@ export default function RegionStationList({ region, playFunc }) {
             toast.dismiss();
             toast('자주 듣는 목록에서 제거했어요.', {
                 icon: '🗑️',
-                duration: 2500,
+                duration: 2000,
                 position: 'bottom-center',
                 style: {
                     borderRadius: '10px',
@@ -31,7 +31,7 @@ export default function RegionStationList({ region, playFunc }) {
             setFavorites([...favorites, title]);
             toast.dismiss();
             toast('자주 듣는 목록에 추가했어요.', {
-                icon: '❤️', duration: 2500,
+                icon: '❤️', duration: 2000,
                 position: 'bottom-center',
                 style: {
                     borderRadius: '10px',
@@ -51,7 +51,6 @@ export default function RegionStationList({ region, playFunc }) {
     }, [favorites]);
 
     return (<>
-        <Toaster />
         {radioData.filter(radio => radio.city === region).map((radio, index) => (
             <div className='station-item' key={index}>
                 <span style={{ width: '90%' }} onClick={() => setPlayer(radio)}>{radio.title}</span>

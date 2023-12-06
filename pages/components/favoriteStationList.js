@@ -2,7 +2,7 @@ import IonIcon from '@reacticons/ionicons';
 import { useRecoilState } from 'recoil';
 import { playerData, favoritesData } from '../../states/states';
 import { useEffect, useState } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 
 export default function FavoriteStationList() {
     const radioData = require('/public/radioStations.json');
@@ -16,7 +16,7 @@ export default function FavoriteStationList() {
             toast.dismiss();
             toast('자주 듣는 목록에서 제거했어요.', {
                 icon: '🗑️',
-                duration: 2500,
+                duration: 2000,
                 position: 'bottom-center',
                 style: {
                     borderRadius: '10px',
@@ -29,17 +29,16 @@ export default function FavoriteStationList() {
             });
         } else {
             setFavorites([...favorites, title]);
+            toast.dismiss();
         }
     }
 
     useEffect(() => {
-        console.log("fav:", favorites);
         setActualFavorites(favorites);
     }, [favorites]);
 
 
     return (<>
-        <Toaster />
         {actualFavorites.length === 0 ? (
             <p style={{ opacity: .8, textAlign: 'center', marginTop: '5em' }}>
                 자주 듣는 스테이션이 하나도 없네요.<br />

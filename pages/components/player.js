@@ -4,10 +4,13 @@ import SwipeableBottomSheet from 'react-swipeable-bottom-sheet';
 import IonIcon from '@reacticons/ionicons'
 import BottomNav from './bottomNav';
 import { useRecoilState } from 'recoil';
-import { playerData } from '../../states/states';
+import { playerData, favoritesData } from '../../states/states';
+import toast from 'react-hot-toast';
 
 const HlsPlayer = forwardRef((props, ref) => {
     const [player, setPlayer] = useRecoilState(playerData);
+    const [favorites, setFavorites] = useRecoilState(favoritesData);
+    const [actualFavorites, setActualFavorites] = useState([])
 
     const videoRef = useRef(null);
     const [isReady, setIsReady] = useState(false);
@@ -15,6 +18,10 @@ const HlsPlayer = forwardRef((props, ref) => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [isBuffering, setIsBuffering] = useState(false);
     const isNative = useRef(null);
+
+    useEffect(() => {
+        setActualFavorites(favorites);
+    }, [favorites]);
 
     const handleNativePlayerState = (state) => {
         console.log("native state:", state)
@@ -99,6 +106,39 @@ const HlsPlayer = forwardRef((props, ref) => {
         }
     }
 
+    const toggleFavorites = (title) => {
+        if (favorites.includes(title)) {
+            setFavorites(favorites.filter(favorite => favorite !== title));
+            toast.dismiss();
+            toast('자주 듣는 목록에서 제거했어요.', {
+                icon: '🗑️',
+                duration: 2000,
+                position: 'bottom-center',
+                style: {
+                    borderRadius: '10px',
+                    background: '#333',
+                    color: '#fff',
+                    width: '100%',
+                    textAlign: 'left'
+                }
+            });
+        } else {
+            setFavorites([...favorites, title]);
+            toast.dismiss();
+            toast('자주 듣는 목록에 추가했어요.', {
+                icon: '❤️', duration: 2000,
+                position: 'bottom-center',
+                style: {
+                    borderRadius: '10px',
+                    background: '#333',
+                    color: '#fff',
+                    width: '100%',
+                    textAlign: 'left'
+                }
+            });
+        }
+    }
+
     return (<>
 
         {isReady && <SwipeableBottomSheet
@@ -127,8 +167,15 @@ const HlsPlayer = forwardRef((props, ref) => {
                         <div className='player-body-title'>
                             {player && player.title}
                         </div>
-                        <div className='player-playpause-btn' onClick={() => [setNativePlayerPlaying(isPlaying ? false : true), setIsPlaying(!isPlaying)]}>
-                            {isPlaying ? <IonIcon name='pause-circle' /> : <IonIcon name='play-circle' />}
+
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+                            <div className='player-playpause-btn' onClick={() => [setNativePlayerPlaying(isPlaying ? false : true), setIsPlaying(!isPlaying)]}>
+                                {isPlaying ? <IonIcon name='pause-circle' /> : <IonIcon name='play-circle' />}
+                            </div>
+
+                            <div className='player-heart-btn' onClick={() => toggleFavorites(player.title)}>
+                                {actualFavorites.includes(player.title) ? <IonIcon name='heart' /> : <IonIcon name='heart-outline' />}
+                            </div>
                         </div>
 
                     </div>

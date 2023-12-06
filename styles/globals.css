@@ -187,8 +187,19 @@ main {
 }
 
 .player-playpause-btn:active {
-  transform: scale(0.9);
+  transform: scale(0.95);
 }
+
+.player-heart-btn {
+  cursor: pointer;
+  font-size: 2rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.player-heart-btn:active {
+  transform: scale(0.95);
+}
+
 
 .bottom-nav {
   display: flex;
