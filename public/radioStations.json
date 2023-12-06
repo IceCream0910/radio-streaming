@@ -5,7 +5,7 @@
         "url": "/api/stream?stn=kbs&ch=1radio"
     },
     {
-        "title": "KBS 2라디오",
+        "title": "KBS HappyFM",
         "city": "seoul",
         "url": "/api/stream?stn=kbs&ch=2radio"
     },
@@ -15,12 +15,12 @@
         "url": "/api/stream?stn=kbs&ch=3radio"
     },
     {
-        "title": "KBS 1FM",
+        "title": "KBS ClassicFM",
         "city": "seoul",
         "url": "/api/stream?stn=kbs&ch=1fm"
     },
     {
-        "title": "KBS 2FM",
+        "title": "KBS CoolFM",
         "city": "seoul",
         "url": "/api/stream?stn=kbs&ch=2fm"
     },
@@ -70,11 +70,6 @@
         "url": "/api/stream?stn=obs"
     },
     {
-        "title": "iFM 경인방송",
-        "city": "seoul",
-        "url": "/api/stream?stn=ifm"
-    },
-    {
         "title": "YTN 라디오",
         "city": "seoul",
         "url": "/api/stream?stn=ytn"
@@ -120,11 +115,6 @@
         "url": "/api/stream?stn=cpbc"
     },
     {
-        "title": "WBS 서울원음방송",
-        "city": "seoul",
-        "url": "/api/stream?stn=wbs"
-    },
-    {
         "title": "국방FM",
         "city": "seoul",
         "url": "/api/stream?stn=kookbang"
@@ -133,11 +123,6 @@
         "title": "국악방송",
         "city": "seoul",
         "url": "/api/stream?stn=kugak"
-    },
-    {
-        "title": "AFN Go Humphreys",
-        "city": "seoul",
-        "url": "/api/stream?stn=afn&city=humphreys"
     },
     {
         "title": "KBS부산 1라디오",
@@ -280,11 +265,6 @@
         "url": "/api/stream/?stn=cpbc&city=busan"
     },
     {
-        "title": "WBS 부산원음방송",
-        "city": "busan",
-        "url": "/api/stream/?stn=wbs&city=busan"
-    },
-    {
         "title": "국방FM",
         "city": "busan",
         "url": "/api/stream/?stn=kookbang"
@@ -400,19 +380,9 @@
         "url": "/api/stream/?stn=cpbc&city=daegu"
     },
     {
-        "title": "WBS 대구원음방송",
-        "city": "daegu",
-        "url": "/api/stream/?stn=wbs&city=daegu"
-    },
-    {
         "title": "국방FM",
         "city": "daegu",
         "url": "/api/stream/?stn=kookbang"
-    },
-    {
-        "title": "AFN Go Daegu",
-        "city": "daegu",
-        "url": "/api/stream/?stn=afn&city=daegu"
     },
     {
         "title": "KBS광주 1라디오",
@@ -467,7 +437,7 @@
     {
         "title": "여수MBC 표준FM",
         "city": "gwangju",
-        "url": "/api/stream?stn=mbc&ch=sfm&city=yeosu"
+        "url": "https://5c3639aa99149.streamlock.net/표준FM/표준FM/playlist.m3u8"
     },
     {
         "title": "여수MBC FM4U",
@@ -525,11 +495,6 @@
         "url": "/api/stream?stn=cpbc&city=gwangju"
     },
     {
-        "title": "WBS 광주원음방송",
-        "city": "gwangju",
-        "url": "/api/stream?stn=wbs&city=gwangju"
-    },
-    {
         "title": "국방FM",
         "city": "gwangju",
         "url": "/api/stream?stn=kookbang"
@@ -585,19 +550,9 @@
         "url": "/api/stream?stn=febc&city=jeonbuk"
     },
     {
-        "title": "WBS 전북원음방송",
-        "city": "jeonbuk",
-        "url": "/api/stream?stn=wbs&city=jeonbuk"
-    },
-    {
         "title": "국방FM",
         "city": "jeonbuk",
         "url": "/api/stream?stn=kookbang"
-    },
-    {
-        "title": "AFN Go Kunsan",
-        "city": "jeonbuk",
-        "url": "/api/stream?stn=afn&city=kunsan"
     },
     {
         "title": "KBS대전 1라디오",
@@ -742,12 +697,12 @@
     {
         "title": "원주MBC 표준FM",
         "city": "gangwon",
-        "url": "/api/stream?stn=mbc&ch=sfm&city=wonju"
+        "url": "/api/stream?stn=mbc&ch=sfm&city=seoul"
     },
     {
         "title": "원주MBC FM4U",
         "city": "gangwon",
-        "url": "/api/stream?stn=mbc&ch=fm4u&city=wonju"
+        "url": "/api/stream?stn=mbc&ch=fm4u&city=seoul"
     },
     {
         "title": "MBC강원영동 표준FM",

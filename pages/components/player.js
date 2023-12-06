@@ -178,7 +178,8 @@ const HlsPlayer = forwardRef((props, ref) => {
                     </div>
                     {!isOpen && player &&
                         <div className='player-header-close' onClick={() => [setNativePlayerPlaying(isPlaying ? false : true), setIsPlaying(!isPlaying)]}>
-                            {isPlaying ? <IonIcon name='pause' /> : <IonIcon name='play' />}
+                            {isBuffering ? <div className='loader' />
+                                : isPlaying ? <IonIcon name='pause' /> : <IonIcon name='play' />}
                         </div>
                     }
                 </div>
@@ -191,7 +192,8 @@ const HlsPlayer = forwardRef((props, ref) => {
 
                         <div style={{ display: 'flex', alignItems: 'center', gap: '20px', justifyContent: 'space-between' }}>
                             <div className='player-playpause-btn' onClick={() => [setNativePlayerPlaying(isPlaying ? false : true), setIsPlaying(!isPlaying)]}>
-                                {isPlaying ? <IonIcon name='pause' /> : <IonIcon name='play' />}
+                                {isBuffering ? <div className='loader' />
+                                    : isPlaying ? <IonIcon name='pause' /> : <IonIcon name='play' />}
                             </div>
 
                             <div className={actualFavorites.includes(player.title) ? 'player-heart-btn active' : 'player-heart-btn'} onClick={() => toggleFavorites(player.title)}>

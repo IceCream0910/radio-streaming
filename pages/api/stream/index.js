@@ -591,24 +591,42 @@ export default async function handler(req, res) {
     if (stn == 'wbs') {
         switch (city) {
             case 'busan':
-                result = "http://141.164.60.206:8000/wbs-b";
+                result = "https://wbsradio.kr/wbs-b";
                 title = 'WBS 부산원음방송';
                 break;
             case 'daegu':
-                result = "http://141.164.60.206:8000/wbs-d";
+                result = "https://wbsradio.kr/wbs-d";
                 title = 'WBS 대구원음방송';
                 break;
             case 'gwangju':
-                result = "http://141.164.60.206:8000/wbs-g";
+                result = "https://wbsradio.kr/wbs-g";
                 title = 'WBS 광주원음방송';
                 break;
             case 'jeonbuk':
-                result = "http://141.164.60.206:8000/wbs-j";
+                result = "https://wbsradio.kr/wbs-j";
                 title = 'WBS 전북원음방송';
                 break;
             default:
-                result = "http://45.76.71.4:8000/wbs-smok";
+                result = "https://wbsradio.kr/wbs-seoul";
                 title = 'WBS 서울원음방송';
+                break;
+        }
+    }
+
+    //afn
+    if (stn == 'afn') {
+        switch (city) {
+            case 'kunsan':
+                result = "https://25433.live.streamtheworld.com/AFNP_KSNAAC.aac";
+                title = 'AFN Go Kunsan';
+                break;
+            case 'daegu':
+                result = "https://19263.live.streamtheworld.com/AFNP_DGUAAC.aac";
+                title = 'AFN Go Daegu';
+                break;
+            default:
+                result = "https://13743.live.streamtheworld.com/AFNP_OSNAAC.aac";
+                title = 'AFN Go Humphreys';
                 break;
         }
     }
@@ -643,7 +661,7 @@ export default async function handler(req, res) {
 
     /*----- iFM 경인방송 -----*/
     if (stn == 'ifm') {
-        result = "http://180.131.1.27:1935/live/aod1/playlist.m3u8";
+        result = "https://180.131.1.27:1935/live/aod1/playlist.m3u8";
         title = 'iFM 경인방송';
     }
 
@@ -669,6 +687,7 @@ export default async function handler(req, res) {
         const headers = {
             'Content-Type': 'audio/x-scpls',
             'Access-Control-Allow-Origin': '*', // 모든 URL 허용
+            'Location': '/',
         };
 
         res.redirect(302, result, headers);

@@ -15,6 +15,10 @@ const IndexPage = () => {
       left: scrollAmount,
       behavior: 'smooth'
     });
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   };
 
 

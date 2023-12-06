@@ -46,8 +46,9 @@ export default function FavoriteStationList() {
             </p>
         ) : (
             radioData.filter(radio => actualFavorites.includes(radio.title)).map((radio, index) => (
-                <div className='station-item' key={index}>
-                    <span style={{ width: '90%' }} onClick={() => setPlayer(radio)}>{radio.title}</span>
+                <div className={`station-item ${player.title === radio.title ? 'active' : ''}`} key={index}>
+                    <span style={{ width: '90%' }} onClick={() => setPlayer(radio)}>{radio.title}&nbsp;
+                        {player.title === radio.title ? <span className='badge'>재생중</span> : ''}</span>
                     <button onClick={() => toggleFavorites(radio.title)}>
                         {actualFavorites.includes(radio.title) ? <IonIcon name='heart' /> : <IonIcon name='heart-outline' />}
                     </button>
