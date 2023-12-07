@@ -1,10 +1,65 @@
 "use client"
 import React, { useState, useRef, useEffect } from 'react'
 import Head from 'next/head';
+import toast from 'react-hot-toast';
+import '@material/web/button/filled-button.js';
+import '@material/web/button/outlined-button.js';
+import '@material/web/checkbox/checkbox.js';
+import '@material/web/select/filled-select';
+import '@material/web/switch/switch.js';
 
 const Settings = () => {
     // const {  } = useGlobalState();
 
+    /* pwa 대응 */
+    let installPrompt = null;
+
+    useEffect(() => {
+        if (!window) return;
+        window.addEventListener("beforeinstallprompt", async (event) => {
+            const relatedApps = await navigator.getInstalledRelatedApps();
+
+            // Search for a specific installed platform-specific app
+            const psApp = relatedApps.find((app) => app.id === "com.icecream.sungilmeal");
+
+            if (psApp) {
+                event.preventDefault();
+                toast('이미 안드로이드 앱이 설치되어 있습니다.');
+            } else {
+                installPrompt = event;
+            }
+        });
+
+        window.addEventListener("appinstalled", () => {
+            disableInAppInstallPrompt();
+        });
+    }, []);
+
+    function disableInAppInstallPrompt() {
+        installPrompt = null;
+    }
+
+    async function installPWA() {
+        if (!installPrompt) {
+            toast.dismiss()
+            toast('이미 웹앱이 설치되어 있어요', {
+                duration: 2000,
+                position: 'bottom-center',
+                style: {
+                    borderRadius: '10px',
+                    background: '#333',
+                    color: '#fff',
+                    width: '100%',
+                    textAlign: 'left',
+                    marginBottom: '120px'
+                }
+            });
+            return;
+        }
+        const result = await installPrompt.prompt();
+        console.log(`Install prompt was: ${result.outcome}`);
+        disableInAppInstallPrompt();
+    }
 
     return (
         <>
@@ -15,6 +70,12 @@ const Settings = () => {
                 <header>
                     <h2 style={{ width: '100%', textAlign: 'left', marginTop: '10px', marginLeft: '13px' }}>설정</h2>
                 </header>
+                <div style={{ height: '60px' }} />
+
+                <h3 style={{ marginLeft: '10px' }}>앱 설치</h3>
+                <md-outlined-button style={{ textAlign: 'left' }}>안드로이드 앱 설치</md-outlined-button>
+                <md-outlined-button onClick={() => installPWA()}>웹앱 설치</md-outlined-button>
+
             </main>
 
             <style jsx>{`

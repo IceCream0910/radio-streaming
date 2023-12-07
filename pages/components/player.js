@@ -6,6 +6,7 @@ import BottomNav from './bottomNav';
 import { useRecoilState } from 'recoil';
 import { playerData, favoritesData } from '../../states/states';
 import toast from 'react-hot-toast';
+import '@material/web/ripple/ripple.js';
 
 const HlsPlayer = forwardRef((props, ref) => {
     const [player, setPlayer] = useRecoilState(playerData);
@@ -159,8 +160,7 @@ const HlsPlayer = forwardRef((props, ref) => {
     }
 
     return (<>
-
-        {isReady && <SwipeableBottomSheet
+        {isReady && player.title && <SwipeableBottomSheet
             open={isOpen}
             onChange={(e) => setIsOpen(e)}
             topShadow={true}
@@ -213,6 +213,8 @@ const HlsPlayer = forwardRef((props, ref) => {
                 <video autoPlay style={{ display: 'none' }}
                     ref={videoRef} />
             </div>
+
+            <md-ripple></md-ripple>
         </SwipeableBottomSheet>}
 
 

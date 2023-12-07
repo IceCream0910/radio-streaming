@@ -18,5 +18,8 @@
     "react-hot-toast": "^2.4.1",
     "react-swipeable-bottom-sheet": "^1.1.2",
     "recoil": "^0.7.7"
+  },
+  "devDependencies": {
+    "next-pwa": "^5.6.0"
   }
 }
