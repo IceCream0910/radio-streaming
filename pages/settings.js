@@ -61,7 +61,7 @@ const Settings = () => {
             <Head>
                 <title>설정</title>
             </Head>
-            <main>
+            <main className='settings'>
                 <header>
                     <h2 style={{ width: '100%', textAlign: 'left', marginTop: '10px', marginLeft: '13px' }}>설정</h2>
                 </header>

@@ -130,7 +130,7 @@ main {
   padding-bottom: 150px;
 }
 
-button {
+.settings button {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -144,7 +144,7 @@ button {
   transition: all 0.2s ease-in-out;
 }
 
-button:active {
+.settings button:active {
   transform: scale(0.98);
 }
 

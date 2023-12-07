@@ -205,7 +205,7 @@ const HlsPlayer = forwardRef((props, ref) => {
                     </div>
                 }
 
-                {isOpen && <div className="circles">
+                {isOpen && isPlaying && <div className="circles">
                     <div className="circle research"></div>
                     <div className="circle design"></div>
                 </div>}
