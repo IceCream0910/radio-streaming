@@ -5,9 +5,13 @@ import toast from 'react-hot-toast';
 
 const Settings = () => {
     // const {  } = useGlobalState();
-
-    /* pwa 대응 */
+    const isNative = useRef(null);
     let installPrompt = null;
+
+    useEffect(() => {
+        const useragent = navigator.userAgent;
+        isNative.current = useragent.indexOf('AndroidNative') > -1;
+    }, []);
 
     useEffect(() => {
         if (!window) return;
@@ -67,10 +71,16 @@ const Settings = () => {
                 </header>
                 <div style={{ height: '60px' }} />
 
-                <h3 style={{ marginLeft: '10px' }}>앱 설치</h3>
-                <button>안드로이드 앱 설치</button>
-                <button onClick={() => installPWA()}>웹앱 설치</button>
-
+                <section style={{ marginLeft: '10px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    {!isNative.current && <>
+                        <h3>앱 설치</h3>
+                        <button>안드로이드 앱 설치</button>
+                        <button onClick={() => installPWA()}>웹앱 설치</button>
+                        <br /></>}
+                    <h3 >정보</h3>
+                    <h5>1.0.0 ver.</h5>
+                    <h5>© Yun Tae In</h5>
+                </section>
             </main>
 
             <style jsx>{`
