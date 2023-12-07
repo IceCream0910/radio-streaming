@@ -167,7 +167,9 @@ const HlsPlayer = forwardRef((props, ref) => {
             shadowTip={false}
             bodyStyle={{ backgroundColor: '#1f1f1f', borderRadius: '20px 20px 0 0' }}
             style={isOpen ? { backgroundColor: '#1f1f1f', borderRadius: '20px', bottom: '0' } : { backgroundColor: '#1f1f1f', borderRadius: '20px', bottom: '60px' }}
-            overflowHeight={60}>
+            overflowHeight={isOpen ? 0 : 60}>
+
+            <md-ripple></md-ripple>
             <div style={{ height: '95dvh' }}>
                 {isOpen &&
                     <div className='bottom-sheet-handle'></div>}
@@ -214,7 +216,6 @@ const HlsPlayer = forwardRef((props, ref) => {
                     ref={videoRef} />
             </div>
 
-            <md-ripple></md-ripple>
         </SwipeableBottomSheet>}
 
 
