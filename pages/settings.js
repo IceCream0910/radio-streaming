@@ -2,11 +2,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import Head from 'next/head';
 import toast from 'react-hot-toast';
-import '@material/web/button/filled-button.js';
-import '@material/web/button/outlined-button.js';
-import '@material/web/checkbox/checkbox.js';
-import '@material/web/select/filled-select';
-import '@material/web/switch/switch.js';
 
 const Settings = () => {
     // const {  } = useGlobalState();
@@ -73,8 +68,8 @@ const Settings = () => {
                 <div style={{ height: '60px' }} />
 
                 <h3 style={{ marginLeft: '10px' }}>앱 설치</h3>
-                <md-outlined-button style={{ textAlign: 'left' }}>안드로이드 앱 설치</md-outlined-button>
-                <md-outlined-button onClick={() => installPWA()}>웹앱 설치</md-outlined-button>
+                <button>안드로이드 앱 설치</button>
+                <button onClick={() => installPWA()}>웹앱 설치</button>
 
             </main>
 
