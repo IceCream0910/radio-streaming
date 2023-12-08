@@ -7,7 +7,10 @@ export default async function handler(req, res) {
         const response = await fetch(`https://miniapi.imbc.com/Schedule/schedulelist`);
         const data = await response.json();
 
-        const currentDate = new Date();
+        const now = new Date();
+        const utc = now.getTime() + (now.getTimezoneOffset() * 60 * 1000);
+        const koreaTimeDiff = 9 * 60 * 60 * 1000;
+        const currentDate = new Date(utc + koreaTimeDiff);
         const currentDay = currentDate.toLocaleDateString('ko-KR', { weekday: 'short' });
         const currentTime = currentDate.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
 
@@ -21,7 +24,10 @@ export default async function handler(req, res) {
         const response = await fetch(`https://static.apis.sbs.co.kr/radio-api/gorealra/1.0/main/section/common`);
         const json = await response.json();
         const data = json.schedule[ch];
-        const currentDate = new Date();
+        const now = new Date();
+        const utc = now.getTime() + (now.getTimezoneOffset() * 60 * 1000);
+        const koreaTimeDiff = 9 * 60 * 60 * 1000;
+        const currentDate = new Date(utc + koreaTimeDiff);
         const currentTime = currentDate.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
 
         result = data.filter(item => item.start_time <= currentTime && item.end_time >= currentTime);
