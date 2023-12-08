@@ -5,12 +5,12 @@ import toast from 'react-hot-toast';
 
 const Settings = () => {
     // const {  } = useGlobalState();
-    const isNative = useRef(null);
+    const [isNative, setIsNative] = useState(false);
     let installPrompt = null;
 
     useEffect(() => {
         const useragent = navigator.userAgent;
-        isNative.current = useragent.indexOf('AndroidNative') > -1;
+        setIsNative(useragent.indexOf('AndroidNative') > -1)
     }, []);
 
     useEffect(() => {
@@ -72,7 +72,7 @@ const Settings = () => {
                 <div style={{ height: '60px' }} />
 
                 <section style={{ marginLeft: '10px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                    {!isNative.current && <>
+                    {!isNative && <>
                         <h3>앱 설치</h3>
                         <button>안드로이드 앱 설치</button>
                         <button onClick={() => installPWA()}>웹앱 설치</button>

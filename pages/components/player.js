@@ -20,6 +20,11 @@ const HlsPlayer = forwardRef((props, ref) => {
     const [isBuffering, setIsBuffering] = useState(false);
     const isNative = useRef(null);
 
+    const [currentProgram, setCurrentProgram] = useState('');
+    const [currentSong, setCurrentSong] = useState('');
+    const intervalSongFetch = useRef(null);
+    const intervalProgramFetch = useRef(null);
+
     useEffect(() => {
         setActualFavorites(favorites);
     }, [favorites]);
@@ -44,13 +49,59 @@ const HlsPlayer = forwardRef((props, ref) => {
 
     useEffect(() => {
         setIsReady(true);
-
         const useragent = navigator.userAgent;
         isNative.current = useragent.indexOf('AndroidNative') > -1;
     }, []);
 
     useEffect(() => {
+        if (intervalSongFetch.current) {
+            clearInterval(intervalSongFetch.current);
+            intervalSongFetch.current = null;
+        }
+        if (intervalProgramFetch.current) {
+            clearInterval(intervalProgramFetch.current);
+            intervalProgramFetch.current = null;
+        }
+
         randomBackground();
+        if (player.song) {
+            const fetchSongData = async () => {
+                try {
+                    const response = await fetch(player.song);
+                    const data = await response.json();
+                    if (data.song) {
+                        setCurrentSong('♬ ' + data.song);
+                    } else {
+                        setCurrentSong('');
+                    }
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                }
+            };
+            fetchSongData()
+            intervalSongFetch.current = setInterval(fetchSongData, 15000);
+        } else { setCurrentSong('') }
+        if (player.program) {
+            const fetchProgramData = async () => {
+                try {
+                    const response = await fetch(player.program);
+                    const data = await response.json();
+
+                    if (data.title) {
+                        setCurrentProgram(data.title);
+                    } else {
+                        setCurrentProgram('');
+                    }
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                }
+            };
+
+            fetchProgramData();
+            intervalProgramFetch.current = setInterval(fetchProgramData, 60 * 1000);
+
+        } else { setCurrentProgram('') }
+
         if (isNative.current && player.url) {
             try {
                 Native.play(player.url, player.title || "제목없음");
@@ -86,6 +137,14 @@ const HlsPlayer = forwardRef((props, ref) => {
             }
         }
 
+        return () => {
+            if (intervalSongFetch.current) {
+                clearInterval(intervalSongFetch.current);
+            }
+            if (intervalProgramFetch.current) {
+                clearInterval(intervalProgramFetch.current);
+            }
+        };
     }, [player]);
 
     function randomBackground() {
@@ -192,7 +251,10 @@ const HlsPlayer = forwardRef((props, ref) => {
                             {player && player.title}
                         </div>
 
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '20px', justifyContent: 'space-between' }}>
+                        <span>{currentProgram}</span><br />
+                        <span style={{ opacity: 0.7 }}>{currentSong}</span>
+
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '20px', justifyContent: 'space-between', marginTop: `${currentProgram ? '20px' : '0'}` }}>
                             <div className='player-playpause-btn' onClick={() => [setNativePlayerPlaying(isPlaying ? false : true), setIsPlaying(!isPlaying)]}>
                                 {isBuffering ? <div className='loader' />
                                     : isPlaying ? <IonIcon name='pause' /> : <IonIcon name='play' />}
