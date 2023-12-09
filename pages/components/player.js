@@ -277,8 +277,15 @@ const HlsPlayer = forwardRef((props, ref) => {
                                     : isPlaying ? <IonIcon name='pause' /> : <IonIcon name='play' />}
                             </div>
 
-                            <div className={actualFavorites.includes(player.title) ? 'player-heart-btn active' : 'player-heart-btn'} onClick={() => toggleFavorites(player.title)}>
-                                {actualFavorites.includes(player.title) ? <IonIcon name='heart' /> : <IonIcon name='heart-outline' />}
+
+                            <div style={{ display: 'flex', gap: '10px' }}>
+                                <div className={actualFavorites.includes(player.title) ? 'player-heart-btn active' : 'player-heart-btn'} onClick={() => toggleFavorites(player.title)}>
+                                    {actualFavorites.includes(player.title) ? <IonIcon name='heart' /> : <IonIcon name='heart-outline' />}
+                                </div>
+                                {isNative.current && <div className={'player-heart-btn'} onClick={() => Native.setSleepTimer()}>
+                                    <IonIcon name='moon-outline' />
+                                </div>}
+
                             </div>
 
                         </div>

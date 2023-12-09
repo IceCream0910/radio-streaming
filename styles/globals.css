@@ -127,25 +127,17 @@ a {
 
 main {
   padding: 1rem 0.8rem;
-  padding-bottom: 150px;
+  padding-bottom: 150px
 }
 
-.settings button {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: 1rem;
-  background-color: #1f1f1f;
-  border: none;
-  border-radius: 15px;
-  outline: none;
-  transition: all 0.2s ease-in-out;
-}
-
-.settings button:active {
-  transform: scale(0.98);
+.settings .station-item {
+  margin-left: -15px;
+  margin-right: -15px;
+  padding: 0.2rem 1rem;
+  justify-content: start;
+  gap: 10px;
+  align-items: start;
+  text-decoration: dotted;
 }
 
 .station-item {

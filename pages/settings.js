@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import Head from 'next/head';
 import toast from 'react-hot-toast';
 import '@material/web/switch/switch.js';
+import IonIcon from '@reacticons/ionicons';
 
 const Settings = () => {
     // const {  } = useGlobalState();
@@ -112,9 +113,16 @@ const Settings = () => {
 
                     {!isNative && <>
                         <h3>앱 설치</h3>
-                        <button>안드로이드 앱 설치</button>
-                        <button onClick={() => installPWA()}>웹앱 설치</button>
+                        <div className='station-item'>안드로이드 앱 설치<IonIcon name='arrow-forward-outline' /></div>
+                        <div className='station-item' onClick={() => installPWA()}>웹 앱으로 설치<IonIcon name='arrow-forward-outline' /></div>
                         <br /></>}
+
+                    <h3>링크</h3>
+                    <div className='station-item' onClick={() => window.open('https://open.kakao.com/o/sBQXcVWf', '_blank')}>문의/스테이션 추가 요청<IonIcon name='arrow-forward-outline' /></div>
+                    <div className='station-item' onClick={() => window.open('', '_blank')}>자주하는 질문<IonIcon name='arrow-forward-outline' /></div>
+                    <div className='station-item' onClick={() => window.open('', '_blank')}>공지사항<IonIcon name='arrow-forward-outline' /></div>
+
+                    <br />
                     <h3 >정보</h3>
                     <h5>1.0.0 ver.</h5>
                     <h5>© Yun Tae In</h5>
