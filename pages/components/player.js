@@ -7,6 +7,7 @@ import { useRecoilState } from 'recoil';
 import { playerData, favoritesData } from '../../states/states';
 import toast from 'react-hot-toast';
 import '@material/web/ripple/ripple.js';
+import TimerModal from './timerModal';
 
 const HlsPlayer = forwardRef((props, ref) => {
     const [player, setPlayer] = useRecoilState(playerData);
@@ -24,6 +25,8 @@ const HlsPlayer = forwardRef((props, ref) => {
     const [currentSong, setCurrentSong] = useState('');
     const intervalSongFetch = useRef(null);
     const intervalProgramFetch = useRef(null);
+
+    const [isOpenTimerModal, setIsOpenTimerModal] = useState(false);
 
     useEffect(() => {
         setActualFavorites(favorites);
@@ -52,6 +55,15 @@ const HlsPlayer = forwardRef((props, ref) => {
         const useragent = navigator.userAgent;
         isNative.current = useragent.indexOf('AndroidNative') > -1;
     }, []);
+
+    useEffect(() => {
+        // html scroll 비활성화
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+    }, [isOpen]);
 
     useEffect(() => {
         if (intervalSongFetch.current) {
@@ -235,6 +247,8 @@ const HlsPlayer = forwardRef((props, ref) => {
         });
     }
 
+
+
     return (<>
         {isReady && player.title && <SwipeableBottomSheet
             open={isOpen}
@@ -282,7 +296,7 @@ const HlsPlayer = forwardRef((props, ref) => {
                                 <div className={actualFavorites.includes(player.title) ? 'player-heart-btn active' : 'player-heart-btn'} onClick={() => toggleFavorites(player.title)}>
                                     {actualFavorites.includes(player.title) ? <IonIcon name='heart' /> : <IonIcon name='heart-outline' />}
                                 </div>
-                                {isNative.current && <div className={'player-heart-btn'} onClick={() => Native.setSleepTimer()}>
+                                {isNative.current && <div className={'player-heart-btn'} onClick={() => setIsOpenTimerModal(true)}>
                                     <IonIcon name='moon-outline' />
                                 </div>}
 
@@ -304,6 +318,14 @@ const HlsPlayer = forwardRef((props, ref) => {
 
         </SwipeableBottomSheet>}
 
+
+
+        {isOpenTimerModal &&
+            <>
+                <div className='timer-modal-backdrop' onClick={() => setIsOpenTimerModal(false)} />
+                <TimerModal closeModal={() => setIsOpenTimerModal(false)} />
+            </>
+        }
 
 
         {!isOpen && <BottomNav />}

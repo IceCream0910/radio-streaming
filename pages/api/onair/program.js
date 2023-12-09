@@ -50,12 +50,23 @@ export default async function handler(req, res) {
         const utc = now.getTime() + (now.getTimezoneOffset() * 60 * 1000);
         const koreaTimeDiff = 9 * 60 * 60 * 1000;
         const currentDate = new Date(utc + koreaTimeDiff);
-        const currentTime = currentDate.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
+        const currentDayIndex = currentDate.getDay();
+        const currentHours = currentDate.getHours();
+        const currentMinutes = currentDate.getMinutes();
+        const currentTime = `${currentHours < 10 ? '0' : ''}${currentHours}${currentMinutes < 10 ? '0' : ''}${currentMinutes}`;
 
-        result = data.filter(item => item.start_time <= currentTime && item.end_time >= currentTime);
+
+        result = data.filter(item => {
+            const startTime = parseInt(item.start_time.replace(':', ''), 10);
+            const endTime = item.end_time === "0:00" ? 2400 : parseInt(item.end_time.replace(':', ''), 10); // "0000"을 "2400"으로 처리
+            const startBeforeOrAtCurrent = startTime <= parseInt(currentTime, 10);
+            const endAfterCurrent = endTime > parseInt(currentTime, 10); // 자정은 특별한 케이스로, "2400"이 되어야 함
+            return startBeforeOrAtCurrent && endAfterCurrent;
+        });
 
         const title = result[0].title;
         res.status(200).json({ title: title });
+
     }
 
     if (stn == 'kbs') {
