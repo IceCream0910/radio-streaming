@@ -4,6 +4,7 @@ import Head from 'next/head';
 import toast from 'react-hot-toast';
 import '@material/web/switch/switch.js';
 import IonIcon from '@reacticons/ionicons';
+import Link from 'next/link';
 
 const Settings = () => {
     // const {  } = useGlobalState();
@@ -23,7 +24,7 @@ const Settings = () => {
             const relatedApps = await navigator.getInstalledRelatedApps();
 
             // Search for a specific installed platform-specific app
-            const psApp = relatedApps.find((app) => app.id === "com.icecream.sungilmeal");
+            const psApp = relatedApps.find((app) => app.id === "com.icecream.simplemediaplayer");
 
             if (psApp) {
                 event.preventDefault();
@@ -118,9 +119,9 @@ const Settings = () => {
                         <br /></>}
 
                     <h3>링크</h3>
-                    <div className='station-item' onClick={() => window.open('https://open.kakao.com/o/sBQXcVWf', '_blank')}>문의/스테이션 추가 요청<IonIcon name='arrow-forward-outline' /></div>
-                    <div className='station-item' onClick={() => window.open('', '_blank')}>자주하는 질문<IonIcon name='arrow-forward-outline' /></div>
-                    <div className='station-item' onClick={() => window.open('', '_blank')}>공지사항<IonIcon name='arrow-forward-outline' /></div>
+                    <a href='mailto:hey@yuntae.in?subject=[라디오 앱 문의] '><div className='station-item'>문의/스테이션 추가 요청<IonIcon name='arrow-forward-outline' /></div></a>
+                    <Link href={'/settings/faq'}><div className='station-item'>자주하는 질문<IonIcon name='arrow-forward-outline' /></div></Link>
+                    <Link href={'/settings/notice'}><div className='station-item'>공지사항<IonIcon name='arrow-forward-outline' /></div></Link>
 
                     <br />
                     <h3 >정보</h3>

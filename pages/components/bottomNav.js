@@ -9,7 +9,7 @@ function BottomNav() {
         <div className="bottom-nav">
             <Link href='/' className={router.pathname === '/' ? 'item active' : 'item'}><IonIcon name={router.pathname == '/' ? "radio" : "radio-outline"} /></Link>
             <Link href='/favorites' className={router.pathname === '/favorites' ? 'item active' : 'item'}><IonIcon name={router.pathname == '/favorites' ? "heart" : "heart-outline"} /></Link>
-            <Link href='/settings' className={router.pathname === '/settings' ? 'item active' : 'item'}><IonIcon name={router.pathname == '/settings' ? "settings" : "settings-outline"} /></Link>
+            <Link href='/settings' className={router.pathname.indexOf('/settings') > -1 ? 'item active' : 'item'}><IonIcon name={router.pathname.indexOf('/settings') > -1 ? "settings" : "settings-outline"} /></Link>
         </div>
     );
 }
