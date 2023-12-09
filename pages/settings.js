@@ -2,11 +2,14 @@
 import React, { useState, useRef, useEffect } from 'react'
 import Head from 'next/head';
 import toast from 'react-hot-toast';
+import '@material/web/switch/switch.js';
 
 const Settings = () => {
     // const {  } = useGlobalState();
     const [isNative, setIsNative] = useState(false);
     let installPrompt = null;
+
+    const [preventScreenOff, setPreventScreenOff] = useState(typeof window !== 'undefined' && window.localStorage.getItem('preventScreenOff') ? window.localStorage.getItem('preventScreenOff') === 'true' : 'false');
 
     useEffect(() => {
         const useragent = navigator.userAgent;
@@ -60,6 +63,21 @@ const Settings = () => {
         disableInAppInstallPrompt();
     }
 
+    const togglePreventScreenOff = () => {
+        if (preventScreenOff == true) {
+            setPreventScreenOff(false);
+        } else {
+            setPreventScreenOff(true);
+        }
+    }
+
+    useEffect(() => {
+        localStorage.setItem('preventScreenOff', preventScreenOff);
+        if (isNative) {
+            Native.updateSetting('settings_prevent_screen_off', preventScreenOff);
+        }
+    }, [preventScreenOff]);
+
     return (
         <>
             <Head>
@@ -72,6 +90,13 @@ const Settings = () => {
                 <div style={{ height: '60px' }} />
 
                 <section style={{ marginLeft: '10px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    {isNative && <>
+                        <label style={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between' }}>
+                            앱 실행 중 화면 꺼짐 방지
+                            <md-switch {...(preventScreenOff == true ? { selected: true } : {})} onClick={togglePreventScreenOff}></md-switch>
+                        </label>
+                        <br /></>}
+
                     {!isNative && <>
                         <h3>앱 설치</h3>
                         <button>안드로이드 앱 설치</button>

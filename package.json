@@ -20,6 +20,8 @@
     "recoil": "^0.7.7"
   },
   "devDependencies": {
-    "next-pwa": "^5.6.0"
+    "@types/react": "18.2.42",
+    "next-pwa": "^5.6.0",
+    "typescript": "5.3.3"
   }
 }
