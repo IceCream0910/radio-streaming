@@ -69,6 +69,19 @@ const Settings = () => {
         } else {
             setPreventScreenOff(true);
         }
+        toast.dismiss()
+        toast('앱을 재시작하면 설정이 적용됩니다', {
+            duration: 2000,
+            position: 'bottom-center',
+            style: {
+                borderRadius: '10px',
+                background: '#333',
+                color: '#fff',
+                width: '100%',
+                textAlign: 'left',
+                marginBottom: '120px'
+            }
+        });
     }
 
     useEffect(() => {

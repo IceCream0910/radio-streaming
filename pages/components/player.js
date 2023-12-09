@@ -218,6 +218,23 @@ const HlsPlayer = forwardRef((props, ref) => {
         }
     }
 
+    function copyToClipboard(text) {
+        window.navigator.clipboard.writeText(text).then(() => {
+            toast.dismiss();
+            toast('현재 곡 정보를 클립보드에 복사했어요', {
+                duration: 2000,
+                position: 'bottom-center',
+                style: {
+                    borderRadius: '10px',
+                    background: '#333',
+                    color: '#fff',
+                    width: '100%',
+                    textAlign: 'left'
+                }
+            });
+        });
+    }
+
     return (<>
         {isReady && player.title && <SwipeableBottomSheet
             open={isOpen}
@@ -252,7 +269,7 @@ const HlsPlayer = forwardRef((props, ref) => {
                         </div>
 
                         <span>{currentProgram}</span><br />
-                        <span style={{ opacity: 0.7 }}>{currentSong}</span>
+                        <span style={{ opacity: 0.7 }} onClick={() => copyToClipboard(currentSong.replace('♬ ', ''))}>{currentSong}</span>
 
                         <div style={{ display: 'flex', alignItems: 'center', gap: '20px', justifyContent: 'space-between', marginTop: `${currentProgram ? '20px' : '0'}` }}>
                             <div className='player-playpause-btn' onClick={() => [setNativePlayerPlaying(isPlaying ? false : true), setIsPlaying(!isPlaying)]}>
