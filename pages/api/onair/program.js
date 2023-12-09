@@ -11,13 +11,35 @@ export default async function handler(req, res) {
         const utc = now.getTime() + (now.getTimezoneOffset() * 60 * 1000);
         const koreaTimeDiff = 9 * 60 * 60 * 1000;
         const currentDate = new Date(utc + koreaTimeDiff);
-        const currentDay = currentDate.toLocaleDateString('ko-KR', { weekday: 'short' });
-        const currentTime = currentDate.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
+        const currentDayIndex = currentDate.getDay();
+        const currentHours = currentDate.getHours();
+        const currentMinutes = currentDate.getMinutes();
+        const currentTime = `${currentHours < 10 ? '0' : ''}${currentHours}${currentMinutes < 10 ? '0' : ''}${currentMinutes}`;
 
-        result = data.filter(item => item.Channel.toLowerCase() === ch && item.LiveDays === currentDay && item.StartTime <= currentTime && item.EndTime >= currentTime);
+        // 요일을 문자열로 변환하는 함수
+        function getDayString(dayIndex) {
+            const dayStrings = ['일', '월', '화', '수', '목', '금', '토'];
+            return dayStrings[dayIndex];
+        }
 
-        const title = result[0].ProgramTitle;
-        res.status(200).json({ title: title });
+        const currentDay = getDayString(currentDayIndex);
+
+        result = data.filter(item => {
+            const chMatch = item.Channel.toLowerCase() === ch;
+            const dayMatch = item.LiveDays.includes(currentDay); // 현재 요일이 방송 요일에 포함되는지 확인
+            const startTime = parseInt(item.StartTime, 10);
+            const endTime = item.EndTime === "0000" ? 2400 : parseInt(item.EndTime, 10); // "0000"을 "2400"으로 처리
+            const startBeforeOrAtCurrent = startTime <= parseInt(currentTime, 10);
+            const endAfterCurrent = endTime > parseInt(currentTime, 10); // 자정은 특별한 케이스로, "2400"이 되어야 함
+            return chMatch && dayMatch && startBeforeOrAtCurrent && endAfterCurrent;
+        });
+
+        if (result.length > 0) {
+            const title = result[0].ProgramTitle;
+            res.status(200).json({ title: title });
+        } else {
+            res.status(200).json({ title: '' });
+        }
     }
 
     if (stn == 'sbs') {
