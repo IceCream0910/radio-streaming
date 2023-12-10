@@ -19,6 +19,22 @@ const Settings = () => {
         const useragent = navigator.userAgent;
         setIsNative(useragent.indexOf('AndroidNative') > -1)
         setIsSidebar(useragent.indexOf('sidebar') > -1);
+
+        if (!document.querySelector(".adfit")?.querySelector("ins")) {
+            const ins = document.createElement("ins");
+            const scr = document.createElement("script");
+            ins.className = "kakao_ad_area";
+            ins.style.display = "none";
+            ins.style.width = "100%";
+            scr.async = true;
+            scr.type = "text/javascript";
+            scr.src = "https://t1.daumcdn.net/kas/static/ba.min.js";
+            ins.setAttribute("data-ad-width", "320");
+            ins.setAttribute("data-ad-height", "100");
+            ins.setAttribute("data-ad-unit", "DAN-kPFNlJNlrF6294zP");
+            document.querySelector(".adfit")?.appendChild(ins);
+            document.querySelector(".adfit")?.appendChild(scr);
+        }
     }, []);
 
     const togglePreventScreenOff = () => {
@@ -85,6 +101,8 @@ const Settings = () => {
                     <Link href={'/settings/notice'}><div className='station-item'>공지사항<IonIcon name='arrow-forward-outline' /></div></Link>
                     <Link href={'/settings/privacy'}><div className='station-item'>개인정보 처리방침<IonIcon name='arrow-forward-outline' /></div></Link>
 
+                    <br />
+                    <div className="adfit" />
                     <br />
                     <h3 >정보</h3>
                     <h5>1.0.0 ver.</h5>

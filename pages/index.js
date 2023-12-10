@@ -6,6 +6,40 @@ import RegionStationList from './components/regionStationList';
 const IndexPage = () => {
   const [region, setRegion] = useState('seoul');
 
+  useEffect(() => {
+    if (!document.querySelector(".adfit1")?.querySelector("ins")) {
+      const ins = document.createElement("ins");
+      const scr = document.createElement("script");
+      ins.className = "kakao_ad_area";
+      ins.style.display = "none";
+      ins.style.width = "100%";
+      scr.async = true;
+      scr.type = "text/javascript";
+      scr.src = "https://t1.daumcdn.net/kas/static/ba.min.js";
+      ins.setAttribute("data-ad-width", "320");
+      ins.setAttribute("data-ad-height", "50");
+      ins.setAttribute("data-ad-unit", "DAN-obadITFjOoIwJTz4");
+      document.querySelector(".adfit1")?.appendChild(ins);
+      document.querySelector(".adfit1")?.appendChild(scr);
+    }
+
+    if (!document.querySelector(".adfit2")?.querySelector("ins")) {
+      const ins = document.createElement("ins");
+      const scr = document.createElement("script");
+      ins.className = "kakao_ad_area";
+      ins.style.display = "none";
+      ins.style.width = "100%";
+      scr.async = true;
+      scr.type = "text/javascript";
+      scr.src = "https://t1.daumcdn.net/kas/static/ba.min.js";
+      ins.setAttribute("data-ad-width", "320");
+      ins.setAttribute("data-ad-height", "100");
+      ins.setAttribute("data-ad-unit", "DAN-kPFNlJNlrF6294zP");
+      document.querySelector(".adfit2")?.appendChild(ins);
+      document.querySelector(".adfit2")?.appendChild(scr);
+    }
+  }, []);
+
   const handleRegionChange = (event) => {
     setRegion(event.target.id);
     const regionSelect = document.querySelector('.region-select');
@@ -47,9 +81,10 @@ const IndexPage = () => {
 
 
         <div style={{ height: '100px' }} />
+        <div className="adfit1" />
         <RegionStationList region={region} />
 
-
+        <div className="adfit2" />
       </main>
     </div>
   );
