@@ -21,53 +21,6 @@ const Settings = () => {
         setIsSidebar(useragent.indexOf('sidebar') > -1);
     }, []);
 
-    useEffect(() => {
-        if (!window) return;
-        window.addEventListener("beforeinstallprompt", async (event) => {
-            const relatedApps = await navigator.getInstalledRelatedApps();
-
-            // Search for a specific installed platform-specific app
-            const psApp = relatedApps.find((app) => app.id === "com.icecream.simplemediaplayer");
-
-            if (psApp) {
-                event.preventDefault();
-                toast('이미 안드로이드 앱이 설치되어 있습니다.');
-            } else {
-                installPrompt = event;
-            }
-        });
-
-        window.addEventListener("appinstalled", () => {
-            disableInAppInstallPrompt();
-        });
-    }, []);
-
-    function disableInAppInstallPrompt() {
-        installPrompt = null;
-    }
-
-    async function installPWA() {
-        if (!installPrompt) {
-            toast.dismiss()
-            toast('이미 웹앱이 설치되어 있어요', {
-                duration: 2000,
-                position: 'bottom-center',
-                style: {
-                    borderRadius: '10px',
-                    background: '#333',
-                    color: '#fff',
-                    width: '100%',
-                    textAlign: 'left',
-                    marginBottom: '120px'
-                }
-            });
-            return;
-        }
-        const result = await installPrompt.prompt();
-        console.log(`Install prompt was: ${result.outcome}`);
-        disableInAppInstallPrompt();
-    }
-
     const togglePreventScreenOff = () => {
         if (preventScreenOff == true) {
             setPreventScreenOff(false);
@@ -118,7 +71,7 @@ const Settings = () => {
                     {!isNative && !isSidebar && <>
                         <h3>앱 설치</h3>
                         <div className='station-item'>안드로이드 앱 설치<IonIcon name='arrow-forward-outline' /></div>
-                        <div className='station-item' onClick={() => installPWA()}>웹 앱으로 설치<IonIcon name='arrow-forward-outline' /></div>
+                        <Link href={'/settings/webapp'}><div className='station-item'>웹 앱으로 설치<IonIcon name='arrow-forward-outline' /></div></Link>
                         <br /></>}
 
                     {isSidebar && <>
