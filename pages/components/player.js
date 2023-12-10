@@ -46,8 +46,24 @@ const HlsPlayer = forwardRef((props, ref) => {
         }
     };
 
+    const handleNativeBack = () => {
+        if (isOpenTimerModal) {
+            setIsOpenTimerModal(false);
+        }
+        else if (isOpen) {
+            setIsOpen(false);
+        } else {
+            if (window.history.state.url != '/') {
+                window.history.back();
+            } else {
+                isNative.current && Native.backHandlerApp();
+            }
+        }
+    };
+
     useImperativeHandle(ref, () => ({
         nativePlayerState: handleNativePlayerState,
+        nativeBackHandler: handleNativeBack
     }));
 
     useEffect(() => {
