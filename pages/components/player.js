@@ -92,6 +92,8 @@ const HlsPlayer = forwardRef((props, ref) => {
             clearInterval(intervalProgramFetch.current);
             intervalProgramFetch.current = null;
         }
+        setCurrentProgram('');
+        setCurrentSong('');
 
         randomBackground();
         if (player.song) {
@@ -101,17 +103,6 @@ const HlsPlayer = forwardRef((props, ref) => {
                     const data = await response.json();
                     if (data.song) {
                         setCurrentSong('♬ ' + data.song);
-                        if ('mediaSession' in navigator) {
-                            navigator.mediaSession.metadata = new MediaMetadata({
-                                title: data.song || player.title,
-                                artist: currentProgram + ' - ' + player.title || player.title,
-                                artwork: [{
-                                    src: "/albumart.png",
-                                    sizes: "500x500",
-                                    type: "image/png",
-                                }]
-                            });
-                        }
                     } else {
                         setCurrentSong('');
                     }
@@ -130,7 +121,7 @@ const HlsPlayer = forwardRef((props, ref) => {
 
                     if (data.title) {
                         setCurrentProgram(data.title);
-                        if (!currentSong && 'mediaSession' in navigator) {
+                        if ('mediaSession' in navigator) {
                             navigator.mediaSession.metadata = new MediaMetadata({
                                 title: data.title || '제목없음',
                                 artist: player.title || '제목없음',
