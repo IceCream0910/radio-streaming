@@ -127,7 +127,8 @@ a {
 
 main {
   padding: 1rem 0.8rem;
-  padding-bottom: 150px
+  padding-bottom: 150px;
+  overflow-x: hidden;
 }
 
 .settings .station-item {
