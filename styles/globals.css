@@ -351,6 +351,10 @@ header {
   max-width: calc(100dvw - 50px);
 }
 
+.settings .kakao_ad_area {
+  margin: 0;
+}
+
 .kakao_ad_area iframe {
   border-radius: 10px;
 }
