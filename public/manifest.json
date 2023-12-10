@@ -2,6 +2,52 @@
     "name": "라디오",
     "short_name": "라디오",
     "description": "언제 어디서나 국내 라디오를 한번에",
+    "screenshots": [
+        {
+            "src": "/screenshots/001.png",
+            "type": "image/png",
+            "sizes": "1620x2880"
+        },
+        {
+            "src": "/screenshots/002.png",
+            "type": "image/png",
+            "sizes": "1620x2880"
+        },
+        {
+            "src": "/screenshots/004.png",
+            "type": "image/png",
+            "sizes": "1620x2880"
+        },
+        {
+            "src": "/screenshots/005.png",
+            "type": "image/png",
+            "sizes": "1620x2880"
+        },
+        {
+            "src": "/screenshots/wide/001.png",
+            "type": "image/png",
+            "form_factor": "wide",
+            "sizes": "1920x1080"
+        },
+        {
+            "src": "/screenshots/wide/002.png",
+            "type": "image/png",
+            "form_factor": "wide",
+            "sizes": "1920x1080"
+        },
+        {
+            "src": "/screenshots/wide/004.png",
+            "type": "image/png",
+            "form_factor": "wide",
+            "sizes": "1920x1080"
+        },
+        {
+            "src": "/screenshots/wide/005.png",
+            "type": "image/png",
+            "form_factor": "wide",
+            "sizes": "1920x1080"
+        }
+    ],
     "icons": [
         {
             "src": "/icon192.png",
