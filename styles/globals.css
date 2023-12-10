@@ -134,11 +134,19 @@ main {
 .settings .station-item {
   margin-left: -15px;
   margin-right: -15px;
-  padding: 0.2rem 1rem;
+  padding: 0 1rem;
   justify-content: start;
-  gap: 10px;
-  align-items: start;
-  text-decoration: dotted;
+  width: fit-content;
+  align-items: center;
+}
+
+.settings .station-item span {
+  padding: 0.3rem 0.5rem;
+}
+
+.settings .station-item svg {
+  position: relative;
+  top: 0px;
 }
 
 .station-item {
@@ -147,7 +155,6 @@ main {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 1rem;
   border-radius: 15px;
   transition: all 0.2s ease-in-out;
   z-index: 0;
@@ -162,17 +169,27 @@ main {
   color: #4cffba;
 }
 
+.station-item span {
+  padding: 1.2rem;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .badge {
-  width: fit-content;
-  height: 30px;
+  width: fit-content !important;
+  align-items: center;
+  height: 20px;
   border-radius: 20px;
-  padding: 2px 5px;
+  padding: 2px 10px !important;
   font-size: .8em;
   background-color: #4cffba;
   color: #000;
   position: relative;
   top: -1px;
   z-index: -1;
+  margin-left: 5px;
 }
 
 .player-header {
@@ -387,14 +404,19 @@ header {
 }
 
 .station-item button {
-  width: 30px;
-  height: 30px;
+  height: 100%;
   z-index: -1;
 }
 
 .region-select button.active {
   border-bottom: 2px solid #4cffba;
   opacity: 1;
+}
+
+
+.station-item button svg {
+  position: relative;
+  top: 0px;
 }
 
 
