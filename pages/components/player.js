@@ -75,13 +75,29 @@ const HlsPlayer = forwardRef((props, ref) => {
     }, []);
 
     useEffect(() => {
-        // html scroll 비활성화
         if (isOpen) {
             document.body.style.overflow = 'hidden';
+            const css = `
+            header {
+                z-index: 0;
+            }
+        `;
+            const styleElement = document.createElement('style');
+            styleElement.innerHTML = css;
+            document.head.appendChild(styleElement);
         } else {
             document.body.style.overflow = 'auto';
+            const css = `
+            header {
+                z-index: 1;
+            }
+        `;
+            const styleElement = document.createElement('style');
+            styleElement.innerHTML = css;
+            document.head.appendChild(styleElement);
         }
     }, [isOpen]);
+
 
     useEffect(() => {
         if (intervalSongFetch.current) {
