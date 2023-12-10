@@ -122,6 +122,7 @@ const Settings = () => {
                     <a href='mailto:hey@yuntae.in?subject=[라디오 앱 문의] '><div className='station-item'>문의/스테이션 추가 요청<IonIcon name='arrow-forward-outline' /></div></a>
                     <Link href={'/settings/faq'}><div className='station-item'>자주하는 질문<IonIcon name='arrow-forward-outline' /></div></Link>
                     <Link href={'/settings/notice'}><div className='station-item'>공지사항<IonIcon name='arrow-forward-outline' /></div></Link>
+                    <Link href={'/settings/privacy'}><div className='station-item'>개인정보 처리방침<IonIcon name='arrow-forward-outline' /></div></Link>
 
                     <br />
                     <h3 >정보</h3>
