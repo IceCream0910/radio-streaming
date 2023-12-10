@@ -197,6 +197,16 @@ main {
   transform: translateX(-50%);
 }
 
+.sidebar-player-handle {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  text-align: center;
+  font-size: 1.8rem;
+  opacity: 0.5;
+  z-index: 9999;
+}
+
 .player-header-title {
   font-size: 1rem;
   font-weight: bold;

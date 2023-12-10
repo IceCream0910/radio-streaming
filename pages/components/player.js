@@ -20,6 +20,7 @@ const HlsPlayer = forwardRef((props, ref) => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [isBuffering, setIsBuffering] = useState(false);
     const isNative = useRef(null);
+    const isSidebar = useRef(null);
 
     const [currentProgram, setCurrentProgram] = useState('');
     const [currentSong, setCurrentSong] = useState('');
@@ -70,6 +71,7 @@ const HlsPlayer = forwardRef((props, ref) => {
         setIsReady(true);
         const useragent = navigator.userAgent;
         isNative.current = useragent.indexOf('AndroidNative') > -1;
+        isSidebar.current = useragent.indexOf('sidebar') > -1;
     }, []);
 
     useEffect(() => {
@@ -99,6 +101,17 @@ const HlsPlayer = forwardRef((props, ref) => {
                     const data = await response.json();
                     if (data.song) {
                         setCurrentSong('♬ ' + data.song);
+                        if ('mediaSession' in navigator) {
+                            navigator.mediaSession.metadata = new MediaMetadata({
+                                title: data.song || player.title,
+                                artist: currentProgram + ' - ' + player.title || player.title,
+                                artwork: [{
+                                    src: "/albumart.png",
+                                    sizes: "500x500",
+                                    type: "image/png",
+                                }]
+                            });
+                        }
                     } else {
                         setCurrentSong('');
                     }
@@ -117,6 +130,17 @@ const HlsPlayer = forwardRef((props, ref) => {
 
                     if (data.title) {
                         setCurrentProgram(data.title);
+                        if (!currentSong && 'mediaSession' in navigator) {
+                            navigator.mediaSession.metadata = new MediaMetadata({
+                                title: data.title || '제목없음',
+                                artist: player.title || '제목없음',
+                                artwork: [{
+                                    src: "/albumart.png",
+                                    sizes: "500x500",
+                                    type: "image/png",
+                                }]
+                            });
+                        }
                     } else {
                         setCurrentProgram('');
                     }
@@ -154,7 +178,12 @@ const HlsPlayer = forwardRef((props, ref) => {
                     if ('mediaSession' in navigator) {
                         navigator.mediaSession.metadata = new MediaMetadata({
                             title: player.title || '제목없음',
-                            artist: '라디오'
+                            artist: '라디오 스트리밍 중',
+                            artwork: [{
+                                src: "/albumart.png",
+                                sizes: "500x500",
+                                type: "image/png",
+                            }]
                         });
                     }
                 }
@@ -277,8 +306,12 @@ const HlsPlayer = forwardRef((props, ref) => {
 
             <md-ripple></md-ripple>
             <div style={{ height: '95dvh' }}>
-                {isOpen &&
+                {isOpen && !isSidebar.current &&
                     <div className='bottom-sheet-handle'></div>}
+
+                {isOpen && isSidebar.current && <div className='sidebar-player-handle' onClick={() => setIsOpen(false)}>
+                    <IonIcon name='chevron-down' />
+                </div>}
                 <div className='player-header'>
                     <div className={isOpen ? 'player-header-title open' : 'player-header-title'} onClick={() => setIsOpen(true)}>
                         {player && (!isOpen ? player.title : '지금 재생 중')}

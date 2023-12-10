@@ -9,6 +9,8 @@ import Link from 'next/link';
 const Settings = () => {
     // const {  } = useGlobalState();
     const [isNative, setIsNative] = useState(false);
+    const [isSidebar, setIsSidebar] = useState(false);
+    const [isOpenQRModal, setisOpenQRModal] = useState(false);
     let installPrompt = null;
 
     const [preventScreenOff, setPreventScreenOff] = useState(typeof window !== 'undefined' && window.localStorage.getItem('preventScreenOff') ? window.localStorage.getItem('preventScreenOff') === 'true' : 'false');
@@ -16,6 +18,7 @@ const Settings = () => {
     useEffect(() => {
         const useragent = navigator.userAgent;
         setIsNative(useragent.indexOf('AndroidNative') > -1)
+        setIsSidebar(useragent.indexOf('sidebar') > -1);
     }, []);
 
     useEffect(() => {
@@ -112,10 +115,15 @@ const Settings = () => {
                         </label>
                         <br /></>}
 
-                    {!isNative && <>
+                    {!isNative && !isSidebar && <>
                         <h3>앱 설치</h3>
                         <div className='station-item'>안드로이드 앱 설치<IonIcon name='arrow-forward-outline' /></div>
                         <div className='station-item' onClick={() => installPWA()}>웹 앱으로 설치<IonIcon name='arrow-forward-outline' /></div>
+                        <br /></>}
+
+                    {isSidebar && <>
+                        <h3>앱 설치</h3>
+                        <div className='station-item' onClick={() => setisOpenQRModal(true)}>안드로이드 앱 설치<IonIcon name='arrow-forward-outline' /></div>
                         <br /></>}
 
                     <h3>링크</h3>
@@ -130,6 +138,45 @@ const Settings = () => {
                     <h5>© Yun Tae In</h5>
                 </section>
             </main>
+
+            {isOpenQRModal && <>
+                <div className='timer-modal-backdrop' onClick={() => setisOpenQRModal(false)} />
+                <div className='timer-modal'>
+                    <div />
+                    <h2>안드로이드 앱 설치
+                        <span onClick={() => setisOpenQRModal(false)} style={{ float: 'right' }}>
+                            <IonIcon name="close-outline" />
+                        </span>
+                    </h2>
+
+
+                    <div
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            gap: '10px',
+                            marginBottom: '10px',
+                        }}
+                    ><img src='/qr.png' style={{ width: '250px', height: '250px' }} />
+                        <p>QR코드를 스캔하면 플레이 스토어 링크로 이동합니다</p>
+                    </div>
+
+
+                    <div
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            gap: '10px',
+                            marginBottom: '10px',
+                        }}
+                    >
+                        <button onClick={() => setisOpenQRModal(false)}>닫기</button>
+                    </div>
+                </div>
+            </>}
 
             <style jsx>{`
         main {
