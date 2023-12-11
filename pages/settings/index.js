@@ -86,13 +86,13 @@ const Settings = () => {
 
                     {!isNative && !isSidebar && <>
                         <h3>앱 설치</h3>
-                        <a href="https://play.google.com/store/apps/details?id=com.icecream.simplemediaplayer" target='_blank'><div className='station-item'>안드로이드 앱 설치(준비중)<IonIcon name='arrow-forward-outline' /></div></a>
+                        <a href="https://play.google.com/store/apps/details?id=com.icecream.simplemediaplayer" target='_blank'><div className='station-item'>안드로이드 앱 설치<IonIcon name='arrow-forward-outline' /></div></a>
                         <Link href={'/settings/webapp'}><div className='station-item'>웹 앱으로 설치<IonIcon name='arrow-forward-outline' /></div></Link>
                         <br /></>}
 
                     {isSidebar && <>
                         <h3>앱 설치</h3>
-                        <div className='station-item' onClick={() => setisOpenQRModal(true)}>안드로이드 앱 설치(준비중)<IonIcon name='arrow-forward-outline' /></div>
+                        <div className='station-item' onClick={() => setisOpenQRModal(true)}>안드로이드 앱 설치<IonIcon name='arrow-forward-outline' /></div>
                         <br /></>}
 
                     <h3>링크</h3>

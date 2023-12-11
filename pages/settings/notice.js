@@ -7,16 +7,15 @@ const NoticeData = [
     question: '서비스 오픈 안내',
     date: '2023.12.11',
     answer: `안녕하세요 :)<br/>
-        세상의 모든 라디오를 하나로 모은 라디오 앱을 <b>웹, 안드로이드*, 네이버 웨일 확장앱</b> 버전으로 출시하였습니다.<br/>
-        * 12.11 15:00 기준 안드로이드 버전은 플레이 스토어 심사로 인해 미출시
+        세상의 모든 라디오를 하나로 모은 라디오 앱을 <b>웹, 안드로이드, 네이버 웨일 확장앱</b> 버전으로 출시하였습니다.<br/><br/>
+        <a href='https://store.whale.naver.com/detail/mebmjdmdebnhodookpfemachpamkjlkl' target="_blank" style="text-decoration:underline">웨일 확장앱 설치하기</a><br/>
+        <a href='https://play.google.com/store/apps/details?id=com.icecream.simplemediaplayer' target="_blank" style="text-decoration:underline">안드로이드 앱 설치하기</a>
         <br/><br/>
         사용 중 불편한 점이나 문의 사항이 있으시면 언제든 <a href='mailto:hey@yuntae.in?subject=[라디오 앱 문의]' style="text-decoration:underline">문의</a>해주시기 바랍니다.<br/>
         앞으로 더 나은 서비스를 제공하기 위해 노력하겠습니다. 감사합니다.
         `,
   }
-  // Add more FAQ items as needed
 ];
-// ... (previous imports and component definition)
 
 const Settings = () => {
   const [openIndex, setOpenIndex] = useState(0);
