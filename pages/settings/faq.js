@@ -64,7 +64,7 @@ const Settings = () => {
                 </header>
                 <div style={{ height: '60px' }} />
 
-                <section style={{ marginLeft: '10px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                <section style={{ marginLeft: '10px', display: 'flex', flexDirection: 'column', gap: '10px', paddingTop: openIndex != null ? '60px' : '0' }}>
                     {FAQData.map((item, index) => (
                         <div key={index} className="faq-item">
                             <div className="question" onClick={() => handleToggle(index)}>
@@ -76,7 +76,7 @@ const Settings = () => {
 
                     <br />
                     <a href='mailto:hey@yuntae.in?subject=[라디오 앱 문의] ' style={{ textDecoration: 'underline' }}><div className='station-item'>아직 궁금한 점이 있나요?</div></a>
-
+                    <br /><br /><br /><br /><br /><br /><br />
                 </section>
             </main>
 
