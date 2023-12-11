@@ -197,7 +197,6 @@ main {
   justify-content: space-between;
   width: 100%;
   align-items: center;
-  padding: 1.5em;
   height: 60px;
   position: fixed;
   top: 0;
@@ -229,6 +228,7 @@ main {
   font-size: 1rem;
   font-weight: bold;
   width: 100%;
+  padding: 1.5em;
 }
 
 .player-header-title.open {
@@ -237,9 +237,16 @@ main {
 }
 
 .player-header-close {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
   font-size: 22px;
   color: rgb(var(--foreground-rgb));
+  padding-right: 1.5em;
+  padding-left: 0.5em;
+  height: 60px;
+  padding-bottom: 10px;
 }
 
 .loader {
