@@ -229,6 +229,7 @@ main {
   font-weight: bold;
   width: 100%;
   padding: 1.5em;
+  padding-left: 2em;
 }
 
 .player-header-title.open {
@@ -243,7 +244,7 @@ main {
   cursor: pointer;
   font-size: 22px;
   color: rgb(var(--foreground-rgb));
-  padding-right: 1.5em;
+  padding-right: 1.4em;
   padding-left: 0.5em;
   height: 60px;
   padding-bottom: 10px;
