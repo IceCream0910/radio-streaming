@@ -4,6 +4,14 @@ import IonIcon from '@reacticons/ionicons';
 
 const NoticeData = [
   {
+    question: '23-12-26 업데이트 내역',
+    date: '2023.12.26',
+    answer: `
+        - PC/태블릿 UI 개선<br/>
+        - 플레이어 화면 성능(GPU 사용량) 개선<br/>
+        `,
+  },
+  {
     question: '서비스 오픈 안내',
     date: '2023.12.11',
     answer: `안녕하세요 :)<br/>
@@ -21,7 +29,7 @@ const Settings = () => {
   const [openIndex, setOpenIndex] = useState(0);
 
   const handleToggle = (index) => {
-    setOpenIndex((prevIndex) => (prevIndex === index ? null : index));
+    setOpenIndex(index);
   };
 
   return (

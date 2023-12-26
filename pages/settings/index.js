@@ -87,7 +87,7 @@ const Settings = () => {
 
                     <br />
                     <h3 >정보</h3>
-                    <h5>1.0.0 ver.</h5>
+                    <h5>1.0.1 ver.</h5>
                     <h5>© Yun Tae In</h5>
                 </section>
             </main>
