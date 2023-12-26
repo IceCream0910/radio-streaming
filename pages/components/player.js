@@ -29,6 +29,8 @@ const HlsPlayer = forwardRef((props, ref) => {
 
     const [isOpenTimerModal, setIsOpenTimerModal] = useState(false);
 
+    const [isMobile, setIsMobile] = useState(true);
+
     useEffect(() => {
         setActualFavorites(favorites);
     }, [favorites]);
@@ -72,10 +74,35 @@ const HlsPlayer = forwardRef((props, ref) => {
         const useragent = navigator.userAgent;
         isNative.current = useragent.indexOf('AndroidNative') > -1;
         isSidebar.current = useragent.indexOf('sidebar') > -1;
+
+        const mediaQuery = window.matchMedia('(max-width: 952px)');
+        if (mediaQuery.matches) {
+            setIsMobile(true);
+        } else {
+            setIsMobile(false);
+        }
+
+        mediaQuery.addEventListener('change', () => {
+            if (mediaQuery.matches) {
+                setIsMobile(true);
+            } else {
+                setIsMobile(false);
+            }
+        });
+
+        return () => {
+            mediaQuery.removeEventListener('change', () => {
+                if (mediaQuery.matches) {
+                    setIsMobile(true);
+                } else {
+                    setIsMobile(false);
+                }
+            });
+        }
     }, []);
 
     useEffect(() => {
-        if (isOpen) {
+        if (isOpen && isMobile) {
             document.body.style.overflow = 'hidden';
             const css = `
             header {
@@ -308,7 +335,10 @@ const HlsPlayer = forwardRef((props, ref) => {
             topShadow={true}
             shadowTip={false}
             bodyStyle={{ backgroundColor: '#1f1f1f', borderRadius: '20px 20px 0 0' }}
-            style={isOpen ? { backgroundColor: '#1f1f1f', borderRadius: '20px', bottom: '0' } : { backgroundColor: '#1f1f1f', borderRadius: '20px', bottom: '60px' }}
+            style={!isMobile ? ({ backgroundColor: '#1f1f1f', borderRadius: '20px', bottom: '0', left: '74dvw', width: '25dvw' }) : (isOpen ? { backgroundColor: '#1f1f1f', borderRadius: '20px', bottom: '0' }
+                : { backgroundColor: '#1f1f1f', borderRadius: '20px', bottom: '60px' })
+            }
+            overlay={isMobile}
             overflowHeight={isOpen ? 0 : 60}>
 
             <md-ripple></md-ripple>
@@ -385,6 +415,7 @@ const HlsPlayer = forwardRef((props, ref) => {
 
 
         {!isOpen && <BottomNav />}
+        {!isMobile && <BottomNav />}
 
     </>
     );

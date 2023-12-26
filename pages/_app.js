@@ -8,10 +8,12 @@ import Script from 'next/script';
 export default function App({ Component, pageProps }) {
   const [currentPlayerData, setCurrentPlayerData] = useState(null);
   const playerRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     window.playerRef = playerRef;
   }, []);
+
 
   return (
     <RecoilRoot>

@@ -177,6 +177,7 @@ main {
   align-items: center;
 }
 
+
 .badge {
   width: fit-content !important;
   align-items: center;
@@ -589,4 +590,36 @@ select option {
   background-color: #1f1f1f;
   color: #fff;
   font-size: 1rem;
+}
+
+
+@media (min-width: 952px) {
+  main {
+    width: 70dvw;
+    margin-left: 1.5em;
+  }
+
+  .station-item:active {
+    background-color: #1f1f1f;
+    transform: scale(1);
+  }
+
+  .station-item button {
+    z-index: 0;
+  }
+
+  header {
+    width: 70dvw;
+    margin-left: 1.5em;
+  }
+
+  .bottom-nav {
+    width: 20dvw;
+    left: 2em;
+    bottom: 20px;
+    border-radius: 30px;
+    box-shadow: -10px -10px 20px #000;
+  }
+
+
 }
