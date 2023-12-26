@@ -30,6 +30,7 @@ const HlsPlayer = forwardRef((props, ref) => {
     const [isOpenTimerModal, setIsOpenTimerModal] = useState(false);
 
     const [isMobile, setIsMobile] = useState(true);
+    const [isFocusing, setIsFocusing] = useState(true);
 
     useEffect(() => {
         setActualFavorites(favorites);
@@ -75,6 +76,13 @@ const HlsPlayer = forwardRef((props, ref) => {
         isNative.current = useragent.indexOf('AndroidNative') > -1;
         isSidebar.current = useragent.indexOf('sidebar') > -1;
 
+        window.addEventListener("blur", () => {
+            setIsFocusing(false)
+        });
+        window.addEventListener("focus", () => {
+            setIsFocusing(true)
+        });
+
         const mediaQuery = window.matchMedia('(max-width: 952px)');
         if (mediaQuery.matches) {
             setIsMobile(true);
@@ -97,6 +105,12 @@ const HlsPlayer = forwardRef((props, ref) => {
                 } else {
                     setIsMobile(false);
                 }
+            });
+            window.removeEventListener("blur", () => {
+                setIsFocusing(false)
+            });
+            window.removeEventListener("focus", () => {
+                setIsFocusing(true)
             });
         }
     }, []);
@@ -393,7 +407,7 @@ const HlsPlayer = forwardRef((props, ref) => {
                     </div>
                 }
 
-                {isOpen && isPlaying && <div className="circles">
+                {isOpen && isPlaying && isFocusing && <div className="circles">
                     <div className="circle research"></div>
                     <div className="circle design"></div>
                 </div>}
