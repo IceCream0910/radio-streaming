@@ -90,7 +90,6 @@ const Settings = () => {
             <style jsx>{`
           main {
             display: flex;
-            width: 100%;
             height: 100vh;
             flex-direction: column;
             gap: 15px;

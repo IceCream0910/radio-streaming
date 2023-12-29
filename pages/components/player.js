@@ -8,6 +8,7 @@ import { playerData, favoritesData } from '../../states/states';
 import toast from 'react-hot-toast';
 import '@material/web/ripple/ripple.js';
 import TimerModal from './timerModal';
+import { createClient } from '@supabase/supabase-js'
 
 const HlsPlayer = forwardRef((props, ref) => {
     const [player, setPlayer] = useRecoilState(playerData);
@@ -31,6 +32,13 @@ const HlsPlayer = forwardRef((props, ref) => {
 
     const [isMobile, setIsMobile] = useState(true);
     const [isFocusing, setIsFocusing] = useState(true);
+
+    //supabase
+    const SUPABASE_URL = "https://ruyftwvajwpaxecjejtg.supabase.co" || process.env.SUPABASE_URL;
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ1eWZ0d3ZhandwYXhlY2planRnIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcwMzg2NTU5NywiZXhwIjoyMDE5NDQxNTk3fQ._5rR3AJQJ45bNAmNTIqkVQSVqpTth5E8ukGcgFDrboA" || process.env.SUPABASE_ANON_KEY;
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const [userCnt, setUserCnt] = useState(1);
+    const [prevChannelId, setPrevChannelId] = useState(null);
 
     useEffect(() => {
         setActualFavorites(favorites);
@@ -202,9 +210,18 @@ const HlsPlayer = forwardRef((props, ref) => {
 
         } else { setCurrentProgram('') }
 
+
         if (isNative.current && player.url) {
+
+            const id = player.url.trim().replaceAll('https://', '').replaceAll('http://', '').replace('/api/stream?', '').replace('radio.yuntae.in', '')
+            if (prevChannelId && prevChannelId != id) {
+                disconnectFromRealtimeServer(prevChannelId);
+            }
+
             try {
                 Native.play(player.url, player.title || "제목없음");
+                setPrevChannelId(id);
+                connectToRealtimeServer(id);
                 setIsPlaying(true);
             } catch (error) {
                 console.log("native error:", error)
@@ -215,8 +232,15 @@ const HlsPlayer = forwardRef((props, ref) => {
                 const hls = new Hls();
 
                 if (player && player.url) {
+                    const id = player.url.trim().replaceAll('https://', '').replaceAll('http://', '').replace('/api/stream?', '').replace('radio.yuntae.in', '')
+                    if (prevChannelId && prevChannelId != id) {
+                        disconnectFromRealtimeServer(prevChannelId);
+                    }
+
                     hls.loadSource(player.url.trim());
                     hls.attachMedia(video);
+                    setPrevChannelId(id);
+                    connectToRealtimeServer(id);
 
                     video.addEventListener('canplaythrough', () => {
                         video.play();
@@ -252,6 +276,74 @@ const HlsPlayer = forwardRef((props, ref) => {
         };
     }, [player]);
 
+
+    const connectToRealtimeServer = (channelId) => {
+        console.log(channelId);
+        const run = async () => {
+            const { data, error } = await supabase
+                .from('user_count')
+                .select('ch, count')
+                .eq('ch', channelId);
+
+            if (data.length > 0) {
+                // 기존 채널에 업데이트
+                await supabase
+                    .from('user_count')
+                    .update({ count: data[0].count + 1 })
+                    .eq('ch', channelId)
+                setUserCnt(data[0].count + 1);
+                await supabase
+                    .channel(channelId)
+                    .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'user_count', filter: 'ch=eq.' + channelId }, handleInserts)
+                    .subscribe();
+            } else {
+                // 새 채널 생성
+                await supabase
+                    .from('user_count')
+                const randomId = Math.floor(Math.random() * 9000000000) + 1000000000;
+                await supabase
+                    .from('user_count')
+                    .insert({ id: randomId, ch: channelId, count: 1 });
+                setUserCnt(1);
+
+                await supabase
+                    .channel(channelId)
+                    .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'user_count', filter: 'ch=eq.' + channelId }, handleInserts)
+                    .subscribe();
+            }
+        };
+        run();
+    }
+
+    const handleInserts = (payload) => {
+        if (payload.new.ch == player.url.trim().replaceAll('https://', '').replaceAll('http://', '').replace('/api/stream?', '').replace('radio.yuntae.in', '')) {
+            console.log(payload);
+            const cnt = payload.new.count;
+            setUserCnt(cnt);
+        }
+    }
+
+    const disconnectFromRealtimeServer = (prevId) => {
+        const run = async () => {
+            await supabase.removeAllChannels();
+
+            const { data, error } = await supabase
+                .from('user_count')
+                .select('ch, count')
+                .eq('ch', prevId);
+
+            console.log("disconnect from realtime server", prevId, data[0].count - 1);
+            setUserCnt(1);
+
+            await supabase
+                .from('user_count')
+                .update({ count: data[0].count - 1 })
+                .eq('ch', prevId);
+
+        };
+        run();
+    }
+
     function randomBackground() {
         const colors = [
             { design: '#ff9a9e', research: '#fad0c4' },
@@ -273,12 +365,45 @@ const HlsPlayer = forwardRef((props, ref) => {
     useEffect(() => {
         if (videoRef.current && !isNative.current) {
             if (isPlaying) {
-                videoRef.current.play();
+                replay();
             } else {
                 videoRef.current.pause();
             }
         }
     }, [isPlaying]);
+
+    function replay() {
+        if (Hls.isSupported() && player) {
+            const video = videoRef.current;
+            const hls = new Hls();
+
+            if (player && player.url) {
+                hls.loadSource(player.url.trim());
+                hls.attachMedia(video);
+
+                video.addEventListener('canplaythrough', () => {
+                    video.play();
+                    setIsPlaying(true);
+                });
+
+                if ('mediaSession' in navigator) {
+                    navigator.mediaSession.metadata = new MediaMetadata({
+                        title: player.title || '제목없음',
+                        artist: '라디오 스트리밍 중',
+                        artwork: [{
+                            src: "/albumart.png",
+                            sizes: "500x500",
+                            type: "image/png",
+                        }]
+                    });
+                }
+            }
+
+            return () => {
+                hls.destroy();
+            };
+        }
+    }
 
     function setNativePlayerPlaying(is) {
         if (isNative.current) {
@@ -363,11 +488,17 @@ const HlsPlayer = forwardRef((props, ref) => {
                 {isOpen && isSidebar.current && <div className='sidebar-player-handle' onClick={() => setIsOpen(false)}>
                     <IonIcon name='chevron-down' />
                 </div>}
-                <div className='player-header'>
+                <div className={isOpen ? 'player-header open' : 'player-header'}>
                     <div className={isOpen ? 'player-header-title open' : 'player-header-title'} onClick={() => setIsOpen(true)}>
                         {player && (!isOpen ? player.title : '지금 재생 중')}
                         {player == [] && '재생 중인 스테이션 없음'}
                     </div>
+                    {isOpen && userCnt > 0 &&
+                        <div title={`${userCnt}명이 함께 듣는중`} className='player-header-title open' style={{ textAlign: 'right', fontSize: '1rem', opacity: '0.8' }}>
+                            <IonIcon name='people' /> {userCnt}
+                        </div>
+                    }
+
                     {!isOpen && player &&
                         <div className='player-header-close' onClick={() => [setNativePlayerPlaying(isPlaying ? false : true), setIsPlaying(!isPlaying)]}>
                             {isBuffering ? <div className='loader' />
@@ -407,7 +538,7 @@ const HlsPlayer = forwardRef((props, ref) => {
                     </div>
                 }
 
-                {isOpen && isPlaying && isFocusing && <div className="circles">
+                {isOpen && isPlaying && <div className="circles">
                     <div className="circle research"></div>
                     <div className="circle design"></div>
                 </div>}

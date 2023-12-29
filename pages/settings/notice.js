@@ -4,11 +4,15 @@ import IonIcon from '@reacticons/ionicons';
 
 const NoticeData = [
   {
-    question: '23-12-26 업데이트 내역',
-    date: '2023.12.26',
+    question: '23년 12월 업데이트 내역',
+    date: '2023.12.30',
     answer: `
-        - PC/태블릿 UI 개선<br/>
-        - 플레이어 화면 성능(GPU 사용량) 개선<br/>
+        <h3>23.12.30</h3><br/>
+        - <span style="opacity: 0.7">(웹/웨일 확장앱)</span> 일시정지 후 다시 재생했을 때, 일시정지 시점이 아닌 실시간 스트리밍 위치로 이동하도록 개선했어요.<br/>
+        - <span style="opacity: 0.7">(Beta) </span>스테이션 별로 현재 청취중인 사용자 수를 실시간으로 표시해줄게요.<br/>
+        <br/><br/>
+        <h3>23.12.26</h3><br/>
+        - PC/태블릿에 맞게 반응형 레이아웃을 적용했어요.<br/><br/>
         `,
   },
   {
@@ -63,7 +67,6 @@ const Settings = () => {
       <style jsx>{`
           main {
             display: flex;
-            width: 100%;
             height: 100vh;
             flex-direction: column;
             gap: 15px;

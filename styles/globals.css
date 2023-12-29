@@ -204,6 +204,10 @@ main {
   z-index: 999;
 }
 
+.player-header.open {
+  justify-content: space-between;
+}
+
 .bottom-sheet-handle {
   width: 60px;
   height: 8px;
@@ -234,8 +238,8 @@ main {
 }
 
 .player-header-title.open {
-  margin-top: 25px;
-  text-align: center;
+  font-size: 1.3rem;
+  margin-top: 45px;
   padding-left: 1.5em;
 }
 
