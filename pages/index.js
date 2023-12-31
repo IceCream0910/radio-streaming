@@ -2,9 +2,11 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import RegionStationList from './components/regionStationList';
+import IonIcon from '@reacticons/ionicons';
 
 const IndexPage = () => {
   const [region, setRegion] = useState('seoul');
+  const [isPCorSidebar, setIsPCorSidebar] = useState(false);
 
   useEffect(() => {
     if (!document.querySelector(".adfit1")?.querySelector("ins")) {
@@ -38,6 +40,10 @@ const IndexPage = () => {
       document.querySelector(".adfit2")?.appendChild(ins);
       document.querySelector(".adfit2")?.appendChild(scr);
     }
+
+
+    const userAgent = navigator.userAgent.toLowerCase();
+    setIsPCorSidebar(/sidebar/.test(userAgent));
   }, []);
 
   const handleRegionChange = (event) => {
@@ -66,6 +72,15 @@ const IndexPage = () => {
         <header>
           <h2 style={{ width: '100%', textAlign: 'left', marginTop: '10px', marginLeft: '13px' }}>스테이션</h2>
           <div className="region-select">
+            {isPCorSidebar && (<>
+              <button className="scroll-button left" onClick={() => document.querySelector('.region-select').scrollBy({ left: -300, behavior: 'smooth' })}>
+                <IonIcon name="chevron-back-outline" />
+              </button>
+
+              <button className="scroll-button right" onClick={() => document.querySelector('.region-select').scrollBy({ left: 300, behavior: 'smooth' })}>
+                <IonIcon name="chevron-forward-outline" />
+              </button></>
+            )}
             <button id="seoul" onClick={handleRegionChange} style={{ marginRight: '10px' }} className={region === 'seoul' ? 'active' : ''}>수도권</button>
             <button id="busan" onClick={handleRegionChange} style={{ marginRight: '10px' }} className={region === 'busan' ? 'active' : ''}>부산·울산·경남</button>
             <button id="daegu" onClick={handleRegionChange} style={{ marginRight: '10px' }} className={region === 'daegu' ? 'active' : ''}>대구·경북</button>
@@ -86,6 +101,25 @@ const IndexPage = () => {
 
         <div className="adfit2" />
       </main>
+      <style jsx>{`
+       .scroll-button {
+          position: absolute;
+          width: 30px;
+          height: 30px;
+          background-color: #000;
+          z-index:5;
+       }
+
+       .scroll-button.left {
+          left: 0;
+          bottom: 15px;
+       }
+
+       .scroll-button.right {
+        right: 0;
+        bottom: 15px;
+     }
+      `}</style>
     </div>
   );
 };
