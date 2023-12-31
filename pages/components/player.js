@@ -292,6 +292,7 @@ const HlsPlayer = forwardRef((props, ref) => {
             event.preventDefault();
             await pageExitEvent();
             event.returnValue = "이 페이지를 벗어나면 라디오가 종료됩니다.";
+            return '';
         });
 
 
@@ -307,6 +308,7 @@ const HlsPlayer = forwardRef((props, ref) => {
                 event.preventDefault();
                 await pageExitEvent();
                 event.returnValue = "이 페이지를 벗어나면 라디오가 종료됩니다.";
+                return '';
             });
         };
     }, [player]);
