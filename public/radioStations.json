@@ -762,11 +762,6 @@
         "url": "/api/stream?stn=mbc&ch=fm4u&city=gangneung"
     },
     {
-        "title": "G1 프레쉬FM",
-        "city": "gangwon",
-        "url": "/api/stream?stn=sbs&ch=powerfm&city=chuncheon"
-    },
-    {
         "title": "EBS FM",
         "city": "gangwon",
         "url": "/api/stream?stn=ebs"

@@ -120,8 +120,29 @@ const HlsPlayer = forwardRef((props, ref) => {
             window.removeEventListener("focus", () => {
                 setIsFocusing(true)
             });
+            if (prevChannelId) {
+                disconnectFromRealtimeServer();
+            }
         }
     }, []);
+
+    const pageExitEvent = async () => {
+        await supabase.removeAllChannels();
+        const id = player.url.trim().replaceAll('https://', '').replaceAll('http://', '').replace('/api/stream?', '').replace('radio.yuntae.in', '');
+
+        const { data, error } = await supabase
+            .from('user_count')
+            .select('ch, count')
+            .eq('ch', id);
+
+        if (data.length > 0) {
+            await supabase
+                .from('user_count')
+                .update({ count: data[0].count - 1 })
+                .eq('ch', id);
+        }
+        console.log("disconnect", id)
+    }
 
     useEffect(() => {
         if (isOpen && isMobile) {
@@ -215,7 +236,7 @@ const HlsPlayer = forwardRef((props, ref) => {
 
             const id = player.url.trim().replaceAll('https://', '').replaceAll('http://', '').replace('/api/stream?', '').replace('radio.yuntae.in', '')
             if (prevChannelId && prevChannelId != id) {
-                disconnectFromRealtimeServer(prevChannelId);
+                disconnectFromRealtimeServer();
             }
 
             try {
@@ -234,7 +255,7 @@ const HlsPlayer = forwardRef((props, ref) => {
                 if (player && player.url) {
                     const id = player.url.trim().replaceAll('https://', '').replaceAll('http://', '').replace('/api/stream?', '').replace('radio.yuntae.in', '')
                     if (prevChannelId && prevChannelId != id) {
-                        disconnectFromRealtimeServer(prevChannelId);
+                        disconnectFromRealtimeServer();
                     }
 
                     hls.loadSource(player.url.trim());
@@ -266,6 +287,14 @@ const HlsPlayer = forwardRef((props, ref) => {
             }
         }
 
+        // 페이지 나갈때
+        window.addEventListener("beforeunload", async function (event) {
+            event.preventDefault();
+            await pageExitEvent();
+            event.returnValue = "이 페이지를 벗어나면 라디오가 종료됩니다.";
+        });
+
+
         return () => {
             if (intervalSongFetch.current) {
                 clearInterval(intervalSongFetch.current);
@@ -273,6 +302,12 @@ const HlsPlayer = forwardRef((props, ref) => {
             if (intervalProgramFetch.current) {
                 clearInterval(intervalProgramFetch.current);
             }
+
+            window.removeEventListener("beforeunload", async function (event) {
+                event.preventDefault();
+                await pageExitEvent();
+                event.returnValue = "이 페이지를 벗어나면 라디오가 종료됩니다.";
+            });
         };
     }, [player]);
 
@@ -316,33 +351,33 @@ const HlsPlayer = forwardRef((props, ref) => {
     }
 
     const handleInserts = (payload) => {
-        if (payload.new.ch == player.url.trim().replaceAll('https://', '').replaceAll('http://', '').replace('/api/stream?', '').replace('radio.yuntae.in', '')) {
+        const { new: { ch, count } } = payload;
+
+        if (ch === player.url.trim().replaceAll('https://', '').replaceAll('http://', '').replace('/api/stream?', '').replace('radio.yuntae.in', '')) {
             console.log(payload);
-            const cnt = payload.new.count;
-            setUserCnt(cnt);
+            setUserCnt(count);
         }
-    }
+    };
 
-    const disconnectFromRealtimeServer = (prevId) => {
-        const run = async () => {
-            await supabase.removeAllChannels();
 
-            const { data, error } = await supabase
-                .from('user_count')
-                .select('ch, count')
-                .eq('ch', prevId);
+    const disconnectFromRealtimeServer = async () => {
+        await supabase.channel(prevChannelId).unsubscribe();
+        await supabase.removeAllChannels();
 
-            console.log("disconnect from realtime server", prevId, data[0].count - 1);
-            setUserCnt(1);
+        const { data, error } = await supabase
+            .from('user_count')
+            .select('ch, count')
+            .eq('ch', prevChannelId);
 
+        if (data.length > 0) {
             await supabase
                 .from('user_count')
                 .update({ count: data[0].count - 1 })
-                .eq('ch', prevId);
-
-        };
-        run();
+                .eq('ch', prevChannelId);
+        }
+        console.log("disconnect", prevChannelId)
     }
+
 
     function randomBackground() {
         const colors = [

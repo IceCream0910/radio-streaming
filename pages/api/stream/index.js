@@ -177,7 +177,7 @@ export default async function handler(req, res) {
                         title = '원주MBC';
                         break;
                     case 'gangneung':
-                        result = "http://123.254.72.24:1935/amlive/livestream/playlist.m3u8";
+                        result = "https://vod.mbceg.co.kr:1443/amlive/livestream/playlist.m3u8";
                         title = 'MBC강원영동';
                         break;
                     case 'jeju':
@@ -252,7 +252,7 @@ export default async function handler(req, res) {
                         title = '원주MBC';
                         break;
                     case 'gangneung':
-                        result = "http://123.254.72.24:1935/fmlive/livestream/playlist.m3u8";
+                        result = "https://vod.mbceg.co.kr:1443/fmlive/livestream/playlist.m3u8";
                         title = 'MBC강원영동';
                         break;
                     case 'jeju':

@@ -10,6 +10,11 @@ const NoticeData = [
         <h3>23.12.30</h3><br/>
         - <span style="opacity: 0.7">(웹/웨일 확장앱)</span> 일시정지 후 다시 재생했을 때, 일시정지 시점이 아닌 실시간 스트리밍 위치로 이동하도록 개선했어요.<br/>
         - <span style="opacity: 0.7">(Beta) </span>스테이션 별로 현재 청취중인 사용자 수를 실시간으로 표시해줄게요.<br/>
+        <br/>
+        <b>스테이션 변경 사항</b>
+        <br/>
+        - MBC강원영동 표준FM, MBC강원영동 FM4U 재생 오류 수정<br/>
+        - G1 프레쉬FM 삭제(보안 정책 이슈)
         <br/><br/>
         <h3>23.12.26</h3><br/>
         - PC/태블릿에 맞게 반응형 레이아웃을 적용했어요.<br/><br/>
@@ -42,15 +47,14 @@ const Settings = () => {
         <title>공지사항</title>
       </Head>
       <main className="settings">
-        <header style={{ display: 'flex', alignItems: 'center', paddingLeft: '30px' }}>
+        <header style={{ display: 'flex', alignItems: 'center', paddingLeft: '30px', paddingBottom: "20px" }}>
           <span onClick={() => window.history.back()} style={{ fontSize: '1.5rem' }}>
             <IonIcon name="arrow-back-outline" style={{ position: 'relative', top: '4px' }} />
           </span>
           <h2 style={{ width: '100%', textAlign: 'left', marginTop: '10px', marginLeft: '13px' }}>공지사항</h2>
         </header>
-        <div style={{ height: '60px' }} />
 
-        <section style={{ marginLeft: '10px', display: 'flex', flexDirection: 'column', gap: '10px', paddingTop: openIndex != null ? '0px' : '0' }}>
+        <section style={{ marginTop: '60px', marginLeft: '10px', display: 'flex', flexDirection: 'column', gap: '10px', paddingTop: openIndex != null ? '0px' : '0' }}>
           {NoticeData.map((item, index) => (
             <div key={index} className="faq-item">
               <div className="question" onClick={() => handleToggle(index)}>

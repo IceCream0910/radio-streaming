@@ -63,7 +63,7 @@ const Settings = () => {
                 <title>자주하는 질문</title>
             </Head>
             <main className="settings">
-                <header style={{ display: 'flex', alignItems: 'center', paddingLeft: '30px' }}>
+                <header style={{ display: 'flex', alignItems: 'center', paddingLeft: '30px', paddingBottom: "20px" }}>
                     <span onClick={() => window.history.back()} style={{ fontSize: '1.5rem' }}>
                         <IonIcon name="arrow-back-outline" style={{ position: 'relative', top: '4px' }} />
                     </span>
@@ -71,7 +71,7 @@ const Settings = () => {
                 </header>
                 <div style={{ height: '60px' }} />
 
-                <section style={{ marginLeft: '10px', display: 'flex', flexDirection: 'column', gap: '10px', paddingTop: openIndex != null ? '60px' : '0' }}>
+                <section style={{ marginTop: '60px', marginLeft: '10px', display: 'flex', flexDirection: 'column', gap: '10px', paddingTop: openIndex != null ? '0px' : '0' }}>
                     {FAQData.map((item, index) => (
                         <div key={index} className="faq-item">
                             <div className="question" onClick={() => handleToggle(index)}>
