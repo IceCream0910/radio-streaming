@@ -299,15 +299,6 @@ const HlsPlayer = forwardRef((props, ref) => {
             }
         }
 
-        // 페이지 나갈때
-        window.addEventListener("beforeunload", async function (event) {
-            event.preventDefault();
-            await pageExitEvent();
-            event.returnValue = "이 페이지를 벗어나면 라디오가 종료됩니다.";
-            return '';
-        });
-
-
         return () => {
             if (intervalSongFetch.current) {
                 clearInterval(intervalSongFetch.current);
@@ -315,13 +306,6 @@ const HlsPlayer = forwardRef((props, ref) => {
             if (intervalProgramFetch.current) {
                 clearInterval(intervalProgramFetch.current);
             }
-
-            window.removeEventListener("beforeunload", async function (event) {
-                event.preventDefault();
-                await pageExitEvent();
-                event.returnValue = "이 페이지를 벗어나면 라디오가 종료됩니다.";
-                return '';
-            });
         };
     }, [player]);
 
