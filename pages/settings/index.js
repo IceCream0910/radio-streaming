@@ -1,5 +1,6 @@
 "use client"
 import React, { useState, useRef, useEffect } from 'react'
+import { useRouter } from 'next/router';
 import Head from 'next/head';
 import toast from 'react-hot-toast';
 import '@material/web/switch/switch.js';
@@ -7,26 +8,58 @@ import IonIcon from '@reacticons/ionicons';
 import Link from 'next/link';
 
 const Settings = () => {
-    // const {  } = useGlobalState();
+    const router = useRouter();
     const [isNative, setIsNative] = useState(false);
     const [isSidebar, setIsSidebar] = useState(false);
     const [isOpenQRModal, setisOpenQRModal] = useState(false);
     let installPrompt = null;
 
-    const [preventScreenOff, setPreventScreenOff] = useState(typeof window !== 'undefined' && window.localStorage.getItem('preventScreenOff') ? window.localStorage.getItem('preventScreenOff') === 'true' : 'false');
+    const [theme, setTheme] = useState('dark'); // ['light', 'dark']
+    const [preventScreenOff, setPreventScreenOff] = useState(false);
+    const [isPlayerAnimation, setIsPlayerAnimation] = useState(true);
+    const [fontSize, setFontSize] = useState(0); // [0, 1, 2]
 
     useEffect(() => {
         const useragent = navigator.userAgent;
         setIsNative(useragent.indexOf('AndroidNative') > -1)
         setIsSidebar(useragent.indexOf('sidebar') > -1);
+
+        setTimeout(() => {
+            // theme localstorage에서 가져오기
+            if (typeof window !== 'undefined' && window.localStorage.getItem('theme')) {
+                setTheme(window.localStorage.getItem('theme'));
+            } else {
+                setTheme('dark');
+            }
+
+            if (typeof window !== 'undefined' && window.localStorage.getItem('fontSize')) {
+                setFontSize(parseInt(window.localStorage.getItem('fontSize')));
+            } else {
+                setFontSize(0);
+            }
+        }, 100);
     }, []);
 
-    const togglePreventScreenOff = () => {
-        if (preventScreenOff == true) {
-            setPreventScreenOff(false);
-        } else {
-            setPreventScreenOff(true);
+    useEffect(() => {
+        const storedPreventScreenOff = typeof window !== 'undefined' && window.localStorage.getItem('preventScreenOff') ? window.localStorage.getItem('preventScreenOff') === 'true' : false;
+        setPreventScreenOff(storedPreventScreenOff);
+        if (isNative) {
+            Native.updateSetting('settings_prevent_screen_off', storedPreventScreenOff);
         }
+    }, []);
+
+    useEffect(() => {
+        const storedIsPlayerAnimation = typeof window !== 'undefined' && window.localStorage.getItem('isPlayerAnimation') ? window.localStorage.getItem('isPlayerAnimation') === 'true' : true;
+        setIsPlayerAnimation(storedIsPlayerAnimation);
+    }, []);
+
+    useEffect(() => {
+        console.log('theme', theme)
+    }, [theme]);
+
+    const togglePreventScreenOff = () => {
+        const newPreventScreenOff = !preventScreenOff;
+        setPreventScreenOff(newPreventScreenOff);
         toast.dismiss()
         toast('앱을 재시작하면 설정이 적용됩니다', {
             duration: 2000,
@@ -40,14 +73,17 @@ const Settings = () => {
                 marginBottom: '120px'
             }
         });
+        localStorage.setItem('preventScreenOff', newPreventScreenOff);
+        if (isNative) {
+            Native.updateSetting('settings_prevent_screen_off', newPreventScreenOff);
+        }
     }
 
-    useEffect(() => {
-        localStorage.setItem('preventScreenOff', preventScreenOff);
-        if (isNative) {
-            Native.updateSetting('settings_prevent_screen_off', preventScreenOff);
-        }
-    }, [preventScreenOff]);
+    const toggleIsPlayerAnimation = () => {
+        const newIsPlayerAnimation = !isPlayerAnimation;
+        setIsPlayerAnimation(newIsPlayerAnimation);
+        localStorage.setItem('isPlayerAnimation', newIsPlayerAnimation);
+    }
 
     return (
         <>
@@ -58,9 +94,38 @@ const Settings = () => {
                 <header>
                     <h2 style={{ width: '100%', textAlign: 'left', marginTop: '10px', marginLeft: '13px' }}>설정</h2>
                 </header>
-                <div style={{ height: '60px' }} />
-
+                <div style={{ height: 'var(--header-bottom-margin)' }} />
+                <br /><br />
                 <section style={{ marginLeft: '10px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+
+                    {theme && <>
+                        <h3>테마</h3>
+                        <div />
+                        <div style={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between', gap: '10px' }}>
+                            <button className={theme == 'dark' ? 'active' : ''} onClick={() => { setTheme('dark'); localStorage.setItem('theme', 'dark'); router.reload(); }}>어두운</button>
+                            <button className={theme == 'light' ? 'active' : ''} onClick={() => { setTheme('light'); localStorage.setItem('theme', 'light'); router.reload(); }}>밝은</button>
+                        </div>
+                        <br />
+                    </>}
+
+
+                    <h3>글자 크기</h3>
+                    <div />
+                    <div style={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between', gap: '10px' }}>
+                        <button className={fontSize == 0 ? 'active' : ''} onClick={() => { setFontSize(0); localStorage.setItem('fontSize', 0); router.reload(); }}>보통</button>
+                        <button className={fontSize == 1 ? 'active' : ''} onClick={() => { setFontSize(1); localStorage.setItem('fontSize', 1); router.reload(); }}>크게</button>
+                        <button className={fontSize == 2 ? 'active' : ''} onClick={() => { setFontSize(2); localStorage.setItem('fontSize', 2); router.reload(); }}>매우 크게</button>
+                    </div>
+                    <br />
+
+                    {!window.matchMedia('(min-width: 952px)').matches && <>
+                        <label style={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between' }}>
+                            플레이어 애니메이션
+                            <md-switch {...(isPlayerAnimation == true ? { selected: true } : {})} onClick={toggleIsPlayerAnimation}></md-switch>
+                        </label>
+                        <br /></>
+                    }
+
                     {isNative && <>
                         <label style={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between' }}>
                             앱 실행 중 화면 꺼짐 방지
@@ -68,6 +133,7 @@ const Settings = () => {
                         </label>
                         <br /></>}
 
+                    <br /><br />
                     {!isNative && !isSidebar && <>
                         <h3>앱 설치</h3>
                         <a href="https://play.google.com/store/apps/details?id=com.icecream.simplemediaplayer" target='_blank'><div className='station-item'>안드로이드 앱 설치<IonIcon name='arrow-forward-outline' /></div></a>

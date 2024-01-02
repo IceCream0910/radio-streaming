@@ -40,7 +40,7 @@ export default function FavoriteStationList() {
 
     return (<>
         {actualFavorites.length === 0 ? (
-            <p style={{ opacity: .8, textAlign: 'center', marginTop: '5em' }}>
+            <p style={{ opacity: .8, textAlign: 'center', marginTop: '5em', fontSize: 'var(--content-font-size)' }}>
                 자주 듣는 스테이션이 하나도 없네요.<br />
                 스테이션 옆 <IonIcon name='heart-outline' /> 버튼을 눌러 추가해보세요.
             </p>

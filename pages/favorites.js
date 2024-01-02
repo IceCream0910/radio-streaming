@@ -33,8 +33,7 @@ const FavoritesPage = () => {
                 <header>
                     <h2 style={{ width: '100%', textAlign: 'left', marginTop: '10px', marginLeft: '13px' }}>자주 듣는</h2>                </header>
 
-
-                <div style={{ height: '60px' }} />
+                <div style={{ height: 'var(--header-bottom-margin)' }} />
                 <div className="adfit" />
                 <FavoriteStationList />
             </main>

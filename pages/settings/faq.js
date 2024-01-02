@@ -103,7 +103,7 @@ const Settings = () => {
   
           .question {
             padding: 15px;
-            background-color: #1f1f1f;
+            background-color: var(--nav-background-color);
             cursor: pointer;
             border-radius: 15px;
             transition: all 0.2s ease-in-out;
@@ -111,7 +111,7 @@ const Settings = () => {
   
           .answer {
             padding: 15px;
-            background-color: #000;
+            background-color: var(--background-color);
             overflow: hidden;
             transition: all 0.2s ease-in-out;
           }

@@ -95,7 +95,7 @@ const IndexPage = () => {
         </header>
 
 
-        <div style={{ height: '100px' }} />
+        <div style={{ height: 'var(--main-header-bottom-margin)' }} />
         <div className="adfit1" />
         <RegionStationList region={region} />
 
@@ -106,7 +106,7 @@ const IndexPage = () => {
           position: absolute;
           width: 30px;
           height: 30px;
-          background-color: #000;
+          background-color: var(--background-color);
           z-index:5;
        }
 

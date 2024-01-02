@@ -11,6 +11,22 @@
   --max-width: 1100px;
   --border-radius: 12px;
 
+  --background-color: #000;
+  --foreground-color: #fff;
+  --button-background-color: #ffffff2f;
+  --button-foreground-color: #fff;
+  --nav-background-color: #1f1f1f;
+  --nav-foreground-color: #fff;
+  --accent-color: #4cffba;
+
+  --title-font-size: 1.6rem;
+  --subtitle-font-size: 1.5rem;
+  --button-font-size: 1.5rem;
+  --content-font-size: 1rem;
+  --mabottomin-header--margin: 100px;
+  --header-bottom-margin: 60px;
+
+
   --foreground-rgb: 255, 255, 255;
   --background-start-rgb: 0, 0, 0;
   --background-end-rgb: 0, 0, 0;
@@ -78,6 +94,7 @@
   --radius: 340px;
 }
 
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -102,16 +119,22 @@ body {
   overflow-x: hidden;
 }
 
+h2 {
+  font-size: var(--title-font-size);
+}
+
+h3 {
+  font-size: var(--subtitle-font-size);
+}
+
 svg {
   position: relative;
   top: 3px;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+  color: var(--foreground-color);
+  background: var(--background-color);
 }
 
 a {
@@ -142,11 +165,41 @@ main {
 
 .settings .station-item span {
   padding: 0.3rem 0.5rem;
+  font-size: var(--button-font-size);
 }
 
 .settings .station-item svg {
   position: relative;
   top: 0px;
+}
+
+.settings button {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 15px;
+  background-color: var(--button-background-color);
+  cursor: pointer;
+  font-size: var(--button-font-size);
+  transition: all 0.2s ease-in-out;
+  color: var(--button-foreground-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  font-weight: 500;
+}
+
+.settings button:active {
+  transform: scale(0.98);
+}
+
+.settings button.active {
+  background-color: #4cffbae1;
+  color: #000000;
+}
+
+label {
+  font-size: var(--button-font-size);
 }
 
 .station-item {
@@ -158,18 +211,22 @@ main {
   border-radius: 15px;
   transition: all 0.2s ease-in-out;
   z-index: 0;
+  font-size: var(--button-font-size);
+
 }
 
 .station-item:active {
-  background-color: #1f1f1f;
+  background-color: var(--nav-background-color);
   transform: scale(0.98);
 }
 
 .station-item.active {
-  color: #4cffba;
+  color: var(--accent-color);
+  font-weight: 800;
 }
 
 .station-item span {
+  font-size: var(--content-font-size);
   padding: 1.2rem;
   width: 100%;
   display: flex;
@@ -230,11 +287,10 @@ main {
 }
 
 .player-header-title {
-  font-size: 1rem;
+  font-size: var(--content-font-size);
   font-weight: bold;
   width: 100%;
   padding: 1.5em;
-  padding-left: 2em;
 }
 
 .player-header-title.open {
@@ -248,9 +304,9 @@ main {
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  font-size: 22px;
-  color: rgb(var(--foreground-rgb));
-  padding-right: 1.4em;
+  font-size: var(--title-font-size);
+  color: var(--foreground-color);
+  padding-right: 1em;
   padding-left: 0.5em;
   height: 60px;
   padding-bottom: 10px;
@@ -260,7 +316,7 @@ main {
   width: 25px;
   height: 25px;
   border: 4px solid #2b2b2b;
-  border-top: 4px solid #4cffba;
+  border-top: 4px solid var(--accent-color);
   border-radius: 50%;
   animation: spin 1s infinite linear;
 }
@@ -285,7 +341,7 @@ main {
 }
 
 .player-body-title {
-  font-size: 2rem;
+  font-size: var(--title-font-size);
   font-weight: bold;
   margin-bottom: 10px;
   font-family: "OAGothic-ExtraBold", -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
@@ -296,11 +352,11 @@ main {
   width: 45px;
   height: 45px;
   border-radius: 15px;
-  background-color: #ffffff2f;
+  background-color: var(--button-background-color);
   cursor: pointer;
-  font-size: 1.5rem;
+  font-size: var(--button-font-size);
   transition: all 0.2s ease-in-out;
-  color: #fff;
+  color: var(--button-foreground-color);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -314,12 +370,12 @@ main {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: #ffffff1c;
+  background-color: var(--button-background-color);
   cursor: pointer;
   font-size: 1.3rem;
   transition: all 0.2s ease-in-out;
   float: right;
-  color: #fff;
+  color: var(--button-foreground-color);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -347,9 +403,10 @@ main {
   left: 0;
   width: 100%;
   z-index: 9999;
-  background-color: #1f1f1f;
+  background-color: var(--nav-background-color);
+  color: var(--nav-foreground-color);
   box-sizing: border-box;
-  font-size: 1.5rem;
+  font-size: var(--button-font-size);
   border-radius: 15px 15px 0 0;
 }
 
@@ -362,7 +419,7 @@ main {
 }
 
 .bottom-nav .item.active {
-  color: #4cffba;
+  color: var(--accent-color);
 }
 
 header {
@@ -372,7 +429,8 @@ header {
   left: 0;
   padding: 1rem;
   padding-bottom: 0;
-  background-color: #000;
+  background-color: var(--background-color);
+  color: var(--foreground-color);
 }
 
 .kakao_ad_area {
@@ -397,7 +455,7 @@ header {
   width: 100%;
   height: 60px;
   box-sizing: border-box;
-  font-size: 1.5rem;
+  font-size: var(--button-font-size);
   overflow-x: scroll;
   white-space: nowrap;
   margin: 0 0.8rem;
@@ -409,8 +467,8 @@ header {
   cursor: pointer;
   background-color: transparent;
   border: none;
-  color: rgb(var(--foreground-rgb));
-  font-size: 1.2rem;
+  color: var(--foreground-color);
+  font-size: var(--button-font-size);
   font-weight: 300;
   transition: all 0.2s ease-in-out;
   width: max-content;
@@ -423,7 +481,7 @@ header {
 }
 
 .region-select button.active {
-  border-bottom: 2px solid #4cffba;
+  border-bottom: 2px solid var(--accent-color);
   opacity: 1;
 }
 
@@ -441,12 +499,15 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  animation-name: rotate;
   animation-duration: 25s;
   animation-iteration-count: infinite;
   animation-direction: alternate;
   backface-visibility: hidden;
   perspective: 1000;
+}
+
+.circles.active {
+  animation-name: rotate;
 }
 
 .circle {
@@ -464,7 +525,6 @@ header {
 .circle.design {
   background: var(--color-design);
   box-shadow: 0 0 var(--radius) var(--radius) var(--color-design);
-  animation-name: float;
   animation-duration: 6s;
   animation-iteration-count: infinite;
   animation-direction: alternate;
@@ -473,10 +533,13 @@ header {
 .circle.research {
   background: var(--color-research);
   box-shadow: 0 0 var(--radius) var(--radius) var(--color-research);
-  animation-name: float;
   animation-duration: 8s;
   animation-iteration-count: infinite;
   animation-direction: alternate-reverse;
+}
+
+.circles.active .circle {
+  animation-name: float;
 }
 
 @keyframes float {
@@ -534,7 +597,7 @@ header {
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color: #1f1f1f;
+  background-color: var(--nav-background-color);
   border-radius: 20px 20px 0 0;
   padding: 1rem;
   box-sizing: border-box;
@@ -549,11 +612,11 @@ header {
   width: 100%;
   padding: 1rem;
   border-radius: 15px;
-  background-color: #ffffff2f;
+  background-color: var(--button-background-color);
   cursor: pointer;
   font-size: 1rem;
   transition: all 0.2s ease-in-out;
-  color: #fff;
+  color: var(--button-foreground-color);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -623,7 +686,7 @@ select option {
     left: 2em;
     bottom: 20px;
     border-radius: 30px;
-    box-shadow: -10px -10px 20px #000;
+    box-shadow: -10px -10px 20px var(--background-color);
   }
 
 

@@ -9,10 +9,55 @@ export default function App({ Component, pageProps }) {
   const [currentPlayerData, setCurrentPlayerData] = useState(null);
   const playerRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [theme, setTheme] = useState(typeof window !== 'undefined' && window.localStorage.getItem('theme') ? window.localStorage.getItem('theme') : 'system'); // ['system', 'light', 'dark'
+  const [fontSize, setFontSize] = useState(typeof window !== 'undefined' && window.localStorage.getItem('fontSize') ? parseInt(window.localStorage.getItem('fontSize')) : 1); // [0, 1, 2, 3]
 
   useEffect(() => {
     window.playerRef = playerRef;
   }, []);
+
+  useEffect(() => {
+    if (theme == 'light') {
+      const root = document.documentElement;
+      root.style.setProperty('--background-color', '#eee');
+      root.style.setProperty('--foreground-color', '#000');
+      root.style.setProperty('--button-background-color', '#0000001f');
+      root.style.setProperty('--button-foreground-color', '#000');
+      root.style.setProperty('--nav-background-color', '#fff');
+      root.style.setProperty('--nav-foreground-color', '#000');
+      root.style.setProperty('--accent-color', '#2ad795');
+    }
+  }, [theme]);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    switch (fontSize) {
+      case 0:
+        root.style.setProperty('--title-font-size', '1.6rem');
+        root.style.setProperty('--subtitle-font-size', '1.5rem');
+        root.style.setProperty('--button-font-size', '1.3rem');
+        root.style.setProperty('--content-font-size', '1rem');
+        root.style.setProperty('--main-header-bottom-margin', '100px');
+        root.style.setProperty('--header-bottom-margin', '60px');
+        break;
+      case 1:
+        root.style.setProperty('--title-font-size', '1.8rem');
+        root.style.setProperty('--subtitle-font-size', '1.7rem');
+        root.style.setProperty('--button-font-size', '1.5rem');
+        root.style.setProperty('--content-font-size', '1.3rem');
+        root.style.setProperty('--main-header-bottom-margin', '110px');
+        root.style.setProperty('--header-bottom-margin', '70px');
+        break;
+      case 2:
+        root.style.setProperty('--title-font-size', '2.2rem');
+        root.style.setProperty('--subtitle-font-size', '1.9rem');
+        root.style.setProperty('--button-font-size', '1.9rem');
+        root.style.setProperty('--content-font-size', '1.7rem');
+        root.style.setProperty('--main-header-bottom-margin', '120px');
+        root.style.setProperty('--header-bottom-margin', '80px');
+        break;
+    }
+  }, [fontSize]);
 
 
   return (

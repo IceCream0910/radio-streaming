@@ -40,6 +40,9 @@ const HlsPlayer = forwardRef((props, ref) => {
     const [userCnt, setUserCnt] = useState(1);
     const [prevChannelId, setPrevChannelId] = useState(null);
 
+    const [isPlayerAnimation, setIsPlayerAnimation] = useState(true);
+
+
     useEffect(() => {
         setActualFavorites(favorites);
     }, [favorites]);
@@ -106,6 +109,14 @@ const HlsPlayer = forwardRef((props, ref) => {
             }
         });
 
+        setTimeout(() => {
+            if (typeof window !== 'undefined' && window.localStorage.getItem('isPlayerAnimation')) {
+                setIsPlayerAnimation(window.localStorage.getItem('isPlayerAnimation'));
+            } else {
+                setIsPlayerAnimation(true);
+            }
+        }, 100);
+
         return () => {
             mediaQuery.removeEventListener('change', () => {
                 if (mediaQuery.matches) {
@@ -124,6 +135,7 @@ const HlsPlayer = forwardRef((props, ref) => {
                 disconnectFromRealtimeServer();
             }
         }
+
     }, []);
 
     const pageExitEvent = async () => {
@@ -502,17 +514,15 @@ const HlsPlayer = forwardRef((props, ref) => {
         });
     }
 
-
-
     return (<>
         {isReady && player.title && <SwipeableBottomSheet
             open={isOpen}
             onChange={(e) => setIsOpen(e)}
             topShadow={true}
             shadowTip={false}
-            bodyStyle={{ backgroundColor: '#1f1f1f', borderRadius: '20px 20px 0 0' }}
-            style={!isMobile ? ({ backgroundColor: '#1f1f1f', borderRadius: '20px', bottom: '0', left: '74dvw', width: '25dvw' }) : (isOpen ? { backgroundColor: '#1f1f1f', borderRadius: '20px', bottom: '0' }
-                : { backgroundColor: '#1f1f1f', borderRadius: '20px', bottom: '60px' })
+            bodyStyle={{ backgroundColor: 'var(--nav-background-color)', borderRadius: '20px 20px 0 0' }}
+            style={!isMobile ? ({ backgroundColor: 'var(--nav-background-color)', borderRadius: '20px', bottom: '0', left: '74dvw', width: '25dvw', boxShadow: 'none' }) : (isOpen ? { backgroundColor: 'var(--nav-background-color)', borderRadius: '20px', bottom: '0', boxShadow: 'none' }
+                : { backgroundColor: 'var(--nav-background-color)', borderRadius: '20px', bottom: '60px', boxShadow: 'none' })
             }
             overlay={isMobile}
             overflowHeight={isOpen ? 0 : 60}>
@@ -575,7 +585,7 @@ const HlsPlayer = forwardRef((props, ref) => {
                     </div>
                 }
 
-                {isOpen && isPlaying && <div className="circles">
+                {isOpen && isPlaying && <div className={isPlayerAnimation == 'true' || !isMobile ? 'circles active' : 'circles'}>
                     <div className="circle research"></div>
                     <div className="circle design"></div>
                 </div>}

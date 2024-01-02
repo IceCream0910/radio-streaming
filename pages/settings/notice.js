@@ -4,6 +4,16 @@ import IonIcon from '@reacticons/ionicons';
 
 const NoticeData = [
   {
+    question: '24년 1월 업데이트 내역',
+    date: '2024.1.2',
+    answer: `
+        <h3>23.1.2</h3><br/>
+        - 테마를 변경할 수 있도록 옵션을 추가했어요.<br/>
+        - 글자 크기 조절 옵션을 추가했어요.<br/>
+        - 플레이어 애니메이션을 끄고 켤 수 있도록 옵션을 추가했어요.<br/>
+        <br/>`,
+  },
+  {
     question: '23년 12월 업데이트 내역',
     date: '2023.12.30',
     answer: `
@@ -85,7 +95,7 @@ const Settings = () => {
   
           .question {
             padding: 15px;
-            background-color: #1f1f1f;
+            background-color: var(--nav-background-color);
             cursor: pointer;
             border-radius: 15px;
             transition: all 0.2s ease-in-out;
@@ -93,7 +103,7 @@ const Settings = () => {
   
           .answer {
             padding: 15px;
-            background-color: #000;
+            background-color: var(--background-color);
             overflow: hidden;
             transition: all 0.2s ease-in-out;
           }
