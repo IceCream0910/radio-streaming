@@ -34,7 +34,7 @@ export default function App({ Component, pageProps }) {
     switch (fontSize) {
       case 0:
         root.style.setProperty('--title-font-size', '1.6rem');
-        root.style.setProperty('--subtitle-font-size', '1.5rem');
+        root.style.setProperty('--subtitle-font-size', '1.2rem');
         root.style.setProperty('--button-font-size', '1.3rem');
         root.style.setProperty('--content-font-size', '1rem');
         root.style.setProperty('--main-header-bottom-margin', '100px');
@@ -42,7 +42,7 @@ export default function App({ Component, pageProps }) {
         break;
       case 1:
         root.style.setProperty('--title-font-size', '1.8rem');
-        root.style.setProperty('--subtitle-font-size', '1.7rem');
+        root.style.setProperty('--subtitle-font-size', '1.5rem');
         root.style.setProperty('--button-font-size', '1.5rem');
         root.style.setProperty('--content-font-size', '1.3rem');
         root.style.setProperty('--main-header-bottom-margin', '110px');

@@ -149,6 +149,7 @@ const Settings = () => {
                     <h5>1.0.1 ver.</h5>
                     <h5>© Yun Tae In</h5>
                 </section>
+                <br/><br/><br/><br/>
             </main>
 
             {isOpenQRModal && <>
@@ -192,17 +193,10 @@ const Settings = () => {
 
             <style jsx>{`
         main {
-            display: flex;
             height: 100vh;
             flex-direction: column;
             gap: 15px;
             padding: 20px;
-        }
-
-        @media (min-width: 952px) {
-            #only-pc {
-                display: none;
-            }
         }
         `}</style>
 
