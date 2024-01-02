@@ -118,13 +118,13 @@ const Settings = () => {
                     </div>
                     <br />
 
-                    {!window.matchMedia('(min-width: 952px)').matches && <>
+                    <div id="only-pc">
                         <label style={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between' }}>
                             플레이어 애니메이션
                             <md-switch {...(isPlayerAnimation == true ? { selected: true } : {})} onClick={toggleIsPlayerAnimation}></md-switch>
                         </label>
-                        <br /></>
-                    }
+                        <br />
+                    </div>
 
                     {isNative && <>
                         <label style={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between' }}>
@@ -204,6 +204,12 @@ const Settings = () => {
             flex-direction: column;
             gap: 15px;
             padding: 20px;
+        }
+
+        @media (min-width: 952px) {
+            #only-pc {
+                display: none;
+            }
         }
         `}</style>
 
