@@ -95,7 +95,7 @@ const Settings = () => {
                     <h2 style={{ width: '100%', textAlign: 'left', marginTop: '10px', marginLeft: '13px' }}>설정</h2>
                 </header>
                 <div style={{ height: 'var(--header-bottom-margin)' }} />
-                <br /><br />
+
                 <section style={{ marginLeft: '10px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
 
                     {theme && <>
@@ -118,13 +118,6 @@ const Settings = () => {
                     </div>
                     <br />
 
-                    <div id="only-pc">
-                        <label style={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between' }}>
-                            플레이어 애니메이션
-                            <md-switch {...(isPlayerAnimation == true ? { selected: true } : {})} onClick={toggleIsPlayerAnimation}></md-switch>
-                        </label>
-                        <br />
-                    </div>
 
                     {isNative && <>
                         <label style={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between' }}>

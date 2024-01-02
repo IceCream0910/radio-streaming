@@ -585,7 +585,7 @@ const HlsPlayer = forwardRef((props, ref) => {
                     </div>
                 }
 
-                {isOpen && isPlaying && <div className={isPlayerAnimation == 'true' || !isMobile ? 'circles active' : 'circles'}>
+                {isOpen && isPlaying && <div className='circles active'>
                     <div className="circle research"></div>
                     <div className="circle design"></div>
                 </div>}

@@ -165,7 +165,7 @@ main {
 
 .settings .station-item span {
   padding: 0.3rem 0.5rem;
-  font-size: var(--button-font-size);
+  font-size: var(--content-font-size);
 }
 
 .settings .station-item svg {
@@ -179,7 +179,7 @@ main {
   border-radius: 15px;
   background-color: var(--button-background-color);
   cursor: pointer;
-  font-size: var(--button-font-size);
+  font-size: var(--content-font-size);
   transition: all 0.2s ease-in-out;
   color: var(--button-foreground-color);
   display: flex;
@@ -211,7 +211,7 @@ label {
   border-radius: 15px;
   transition: all 0.2s ease-in-out;
   z-index: 0;
-  font-size: var(--button-font-size);
+  font-size: var(--content-font-size);
 
 }
 
