@@ -199,7 +199,7 @@ main {
 }
 
 label {
-  font-size: var(--button-font-size);
+  font-size: var(--content-font-size);
 }
 
 .station-item {
