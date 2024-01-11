@@ -315,7 +315,7 @@ export default async function handler(req, res) {
                         title = 'KBC 마이FM';
                         break;
                     case 'jeonju':
-                        result = "http://61.85.197.53:1935/jtv_radio/myStream/playlist.m3u8";
+                        result = "https://jtvonair.sbsoft.net/jtv_radio/myStream/playlist.m3u8";
                         title = 'JTV 매직FM';
                         break;
                     case 'daejeon':
@@ -325,10 +325,6 @@ export default async function handler(req, res) {
                     case 'cheongju':
                         result = "https://wowza1.cjb.co.kr/live/cjbradio/playlist.m3u8";
                         title = 'CJB 조이FM';
-                        break;
-                    case 'chuncheon':
-                        result = "http://61.82.49.4:1935/fm/_definst_/myStream/playlist.m3u8";
-                        title = 'G1 프레쉬FM';
                         break;
                     case 'jeju':
                         result = "http://123.140.197.22/stream/2/play.m3u8";
@@ -357,51 +353,51 @@ export default async function handler(req, res) {
         title = 'TBN ';
         switch (city) {
             case 'busan':
-                result = "http://radio2.tbn.or.kr:1935/busan/myStream/playlist.m3u8";
+                result = "https://5cc6beb04faf6.streamlock.net/busan/myStream/playlist.m3u8";
                 title += '부산교통방송';
                 break;
             case 'ulsan':
-                result = "http://radio2.tbn.or.kr:1935/ulsan/myStream/playlist.m3u8";
+                result = "https://5cc6beb04faf6.streamlock.net/ulsan/myStream/playlist.m3u8";
                 title += '울산교통방송';
                 break;
             case 'gyeongnam':
-                result = "http://radio2.tbn.or.kr:1935/gyeongnam/myStream/playlist.m3u8";
+                result = "https://5cc6beb04faf6.streamlock.net/gyeongnam/myStream/playlist.m3u8";
                 title += '경남교통방송';
                 break;
             case 'daegu':
-                result = "http://radio2.tbn.or.kr:1935/daegu/myStream/playlist.m3u8";
+                result = "https://5cc6beb04faf6.streamlock.net/daegu/myStream/playlist.m3u8";
                 title += '대구교통방송';
                 break;
             case 'gyeongbuk':
-                result = "http://radio2.tbn.or.kr:1935/kyungbuk/myStream/playlist.m3u8";
+                result = "https://5cc6beb04faf6.streamlock.net/kyungbuk/myStream/playlist.m3u8";
                 title += '경북교통방송';
                 break;
             case 'gwangju':
-                result = "http://radio2.tbn.or.kr:1935/gwangju/myStream/playlist.m3u8";
+                result = "https://5cc6beb04faf6.streamlock.net/gwangju/myStream/playlist.m3u8";
                 title += '광주교통방송';
                 break;
             case 'jeonbuk':
-                result = "http://radio2.tbn.or.kr:1935/jeonbuk/myStream/playlist.m3u8";
+                result = "https://5cc6beb04faf6.streamlock.net/jeonbuk/myStream/playlist.m3u8";
                 title += '전북교통방송';
                 break;
             case 'daejeon':
-                result = "http://radio2.tbn.or.kr:1935/daejeon/myStream/playlist.m3u8";
+                result = "https://5cc6beb04faf6.streamlock.net/daejeon/myStream/playlist.m3u8";
                 title += '대전교통방송';
                 break;
             case 'chungbuk':
-                result = "http://radio2.tbn.or.kr:1935/chungbuk/myStream/playlist.m3u8";
+                result = "https://5cc6beb04faf6.streamlock.net/chungbuk/myStream/playlist.m3u8";
                 title += '충북교통방송';
                 break;
             case 'gangwon':
-                result = "http://radio2.tbn.or.kr:1935/gangwon/myStream/playlist.m3u8";
+                result = "https://5cc6beb04faf6.streamlock.net/gangwon/myStream/playlist.m3u8";
                 title += '강원교통방송';
                 break;
             case 'jeju':
-                result = "http://radio2.tbn.or.kr:1935/jeju/myStream/playlist.m3u8";
+                result = "https://5cc6beb04faf6.streamlock.net/jeju/myStream/playlist.m3u8";
                 title += '제주교통방송';
                 break;
             default:
-                result = "http://radio2.tbn.or.kr:1935/gyeongin/myStream/playlist.m3u8";
+                result = "https://5cc6beb04faf6.streamlock.net/gyeongin/myStream/playlist.m3u8";
                 title += '경인교통방송';
                 break;
         }
@@ -565,26 +561,10 @@ export default async function handler(req, res) {
 
     //cpbs
     if (stn == 'cpbc') {
-        switch (city) {
-            case 'busan':
-                result = "http://pbcradio.dynamicsmart.com:1935/radio/bscpbc-radio/index.m3u8";
-                title = 'CPBC 부산가톨릭평화방송';
-                break;
-            case 'daegu':
-                result = "http://live.dgcpbc.co.kr/dgcpbclive/livestream/playlist.m3u8";
-                title = 'CPBC 대구가톨릭평화방송';
-                break;
-            case 'gwangju':
-                result = "http://pbcradio.dynamicsmart.com:1935/radio/kjpbc2/index.m3u8";
-                title = 'CPBC 광주가톨릭평화방송';
-                break;
-            default:
-                const promise = await fetch("https://apis.cpbc.co.kr/play-api/2.0/onair/channel/radio");
-                const json = await promise.json();
-                result = await json.onair.source.mediasource.mediaurl;
-                title = 'CPBC 가톨릭평화방송';
-                break;
-        }
+        const promise = await fetch("https://apis.cpbc.co.kr/play-api/2.0/onair/channel/radio");
+        const json = await promise.json();
+        result = await json.onair.source.mediasource.mediaurl;
+        title = 'CPBC 가톨릭평화방송';
     }
 
     //wbs

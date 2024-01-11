@@ -12,8 +12,13 @@ export default function App({ Component, pageProps }) {
   const [theme, setTheme] = useState(typeof window !== 'undefined' && window.localStorage.getItem('theme') ? window.localStorage.getItem('theme') : 'system'); // ['system', 'light', 'dark'
   const [fontSize, setFontSize] = useState(typeof window !== 'undefined' && window.localStorage.getItem('fontSize') ? parseInt(window.localStorage.getItem('fontSize')) : 0); // [0, 1, 2, 3]
 
+  function test() {
+    console.log('test');
+  }
+
   useEffect(() => {
     window.playerRef = playerRef;
+    window.test = test;
   }, []);
 
   useEffect(() => {
