@@ -25,23 +25,6 @@ const IndexPage = () => {
       document.querySelector(".adfit1")?.appendChild(scr);
     }
 
-    if (!document.querySelector(".adfit2")?.querySelector("ins")) {
-      const ins = document.createElement("ins");
-      const scr = document.createElement("script");
-      ins.className = "kakao_ad_area";
-      ins.style.display = "none";
-      ins.style.width = "100%";
-      scr.async = true;
-      scr.type = "text/javascript";
-      scr.src = "https://t1.daumcdn.net/kas/static/ba.min.js";
-      ins.setAttribute("data-ad-width", "320");
-      ins.setAttribute("data-ad-height", "100");
-      ins.setAttribute("data-ad-unit", "DAN-kPFNlJNlrF6294zP");
-      document.querySelector(".adfit2")?.appendChild(ins);
-      document.querySelector(".adfit2")?.appendChild(scr);
-    }
-
-
     const userAgent = navigator.userAgent.toLowerCase();
     setIsPCorSidebar(/sidebar/.test(userAgent));
   }, []);
@@ -99,7 +82,6 @@ const IndexPage = () => {
         <div className="adfit1" />
         <RegionStationList region={region} />
 
-        <div className="adfit2" />
       </main>
       <style jsx>{`
        .scroll-button {
