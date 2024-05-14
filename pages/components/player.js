@@ -34,8 +34,8 @@ const HlsPlayer = forwardRef((props, ref) => {
     const [isFocusing, setIsFocusing] = useState(true);
 
     //supabase
-    const SUPABASE_URL = "https://ruyftwvajwpaxecjejtg.supabase.co" || process.env.SUPABASE_URL;
-    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ1eWZ0d3ZhandwYXhlY2planRnIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcwMzg2NTU5NywiZXhwIjoyMDE5NDQxNTk3fQ._5rR3AJQJ45bNAmNTIqkVQSVqpTth5E8ukGcgFDrboA" || process.env.SUPABASE_ANON_KEY;
+    const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     const [userCnt, setUserCnt] = useState(1);
     const [prevChannelId, setPrevChannelId] = useState(null);
