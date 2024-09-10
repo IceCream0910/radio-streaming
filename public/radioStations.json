@@ -202,16 +202,6 @@
         "url": "/api/stream/?stn=mbc&ch=fm4u&city=changwon"
     },
     {
-        "title": "KNN 러브FM",
-        "city": "busan",
-        "url": "/api/stream/?stn=sbs&ch=lovefm&city=busan"
-    },
-    {
-        "title": "KNN 파워FM",
-        "city": "busan",
-        "url": "/api/stream/?stn=sbs&ch=powerfm&city=busan"
-    },
-    {
         "title": "EBS FM",
         "city": "busan",
         "url": "/api/stream/?stn=ebs"
