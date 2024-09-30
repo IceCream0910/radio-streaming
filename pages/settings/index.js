@@ -18,6 +18,7 @@ const Settings = () => {
     const [preventScreenOff, setPreventScreenOff] = useState(false);
     const [isPlayerAnimation, setIsPlayerAnimation] = useState(true);
     const [fontSize, setFontSize] = useState(0); // [0, 1, 2]
+    const [initialPage, setInitialPage] = useState('station');
 
     useEffect(() => {
         const useragent = navigator.userAgent;
@@ -37,8 +38,24 @@ const Settings = () => {
             } else {
                 setFontSize(0);
             }
+
+            if (typeof window !== 'undefined' && window.localStorage.getItem('initialPage')) {
+                setInitialPage(window.localStorage.getItem('initialPage'));
+            } else {
+                setInitialPage('station');
+            }
         }, 100);
     }, []);
+
+    const handleInitialPageChange = (page) => {
+        setInitialPage(page);
+        localStorage.setItem('initialPage', page);
+        toast.success('초기 페이지가 변경되었습니다.', {
+            duration: 2000,
+            position: 'bottom-center',
+        });
+    };
+
 
     useEffect(() => {
         const storedPreventScreenOff = typeof window !== 'undefined' && window.localStorage.getItem('preventScreenOff') ? window.localStorage.getItem('preventScreenOff') === 'true' : false;
@@ -108,6 +125,12 @@ const Settings = () => {
                         <br />
                     </>}
 
+                    <h3>시작 페이지</h3>
+                    <div style={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between', gap: '10px' }}>
+                        <button className={initialPage === 'station' ? 'active' : ''} onClick={() => handleInitialPageChange('station')}>스테이션</button>
+                        <button className={initialPage === 'favorites' ? 'active' : ''} onClick={() => handleInitialPageChange('favorites')}>자주 듣는</button>
+                    </div>
+                    <br />
 
                     <h3>글자 크기</h3>
                     <div />
@@ -149,7 +172,7 @@ const Settings = () => {
                     <h5>1.0.1 ver.</h5>
                     <h5>© Yun Tae In</h5>
                 </section>
-                <br/><br/><br/><br/>
+                <br /><br /><br /><br />
             </main>
 
             {isOpenQRModal && <>

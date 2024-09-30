@@ -2,10 +2,12 @@ import '../styles/globals.css'
 import { RecoilRoot } from 'recoil';
 import HlsPlayer from './components/player';
 import { useState, useRef, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { Toaster } from 'react-hot-toast';
 import Script from 'next/script';
 
 export default function App({ Component, pageProps }) {
+  const router = useRouter();
   const [currentPlayerData, setCurrentPlayerData] = useState(null);
   const playerRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
@@ -19,6 +21,11 @@ export default function App({ Component, pageProps }) {
   useEffect(() => {
     window.playerRef = playerRef;
     window.test = test;
+
+    const initialPage = localStorage.getItem('initialPage') || 'station';
+    if (router.pathname === '/' && initialPage === 'favorites') {
+      router.push('/favorites');
+    }
   }, []);
 
   useEffect(() => {
