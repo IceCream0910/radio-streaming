@@ -35,6 +35,12 @@ const FavoritesPage = () => {
 
                 <div style={{ height: 'var(--header-bottom-margin)' }} />
                 <div className="adfit" />
+                <ins class="adsbygoogle"
+                    style={{ display: 'block' }}
+                    data-ad-client="ca-pub-7178712602934912"
+                    data-ad-slot="8415533910"
+                    data-ad-format="auto"
+                    data-full-width-responsive="true"></ins>
                 <FavoriteStationList />
             </main>
         </div>

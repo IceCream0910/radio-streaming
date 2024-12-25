@@ -79,7 +79,16 @@ const IndexPage = () => {
 
 
         <div style={{ height: 'var(--main-header-bottom-margin)' }} />
-        <div className="adfit1" />
+
+        <div className='adfit1' />
+
+        <ins class="adsbygoogle"
+          style={{ display: 'block' }}
+          data-ad-client="ca-pub-7178712602934912"
+          data-ad-slot="8415533910"
+          data-ad-format="auto"
+          data-full-width-responsive="true"></ins>
+
         <RegionStationList region={region} />
 
       </main>

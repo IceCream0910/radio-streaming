@@ -11,6 +11,11 @@ export default function Document() {
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/icon.png" />
         <link rel="manifest" href="/manifest.json" />
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7178712602934912"
+          crossorigin="anonymous"></script>
+        <script>
+          (adsbygoogle = window.adsbygoogle || []).push({ });
+        </script>
       </Head>
       <body>
         <Main />
