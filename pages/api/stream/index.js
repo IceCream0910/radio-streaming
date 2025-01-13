@@ -409,55 +409,55 @@ export default async function handler(req, res) {
             case 'sfm': // CBS 표준FM
                 switch (city) {
                     case 'busan':
-                        result = "https://aac.cbs.co.kr/busan981/_definst_/busan981.stream/playlist.m3u8";
+                        result = "https://m-aac.cbs.co.kr/busan981/_definst_/busan981.stream/playlist.m3u8";
                         title = '부산';
                         break;
                     case 'ulsan':
-                        result = "https://aac.cbs.co.kr/ulsan/_definst_/ulsan.stream/playlist.m3u8";
+                        result = "https://m-aac.cbs.co.kr/ulsan/_definst_/ulsan.stream/playlist.m3u8";
                         title = '울산';
                         break;
                     case 'gyeongnam':
-                        result = "https://aac.cbs.co.kr/gyeongnam/_definst_/gyeongnam.stream/playlist.m3u8";
+                        result = "https://m-aac.cbs.co.kr/gyeongnam/_definst_/gyeongnam.stream/playlist.m3u8";
                         title = '경남';
                         break;
                     case 'daegu':
-                        result = "https://aac.cbs.co.kr/daegu/_definst_/daegu.stream/playlist.m3u8";
+                        result = "https://m-aac.cbs.co.kr/daegu/_definst_/daegu.stream/playlist.m3u8";
                         title = '대구';
                         break;
                     case 'pohang':
-                        result = "https://aac.cbs.co.kr/pohang/_definst_/pohang.stream/playlist.m3u8";
+                        result = "https://m-aac.cbs.co.kr/pohang/_definst_/pohang.stream/playlist.m3u8";
                         title = '포항';
                         break;
                     case 'gwangju':
-                        result = "https://aac.cbs.co.kr/gwangju/_definst_/gwangju.stream/playlist.m3u8";
+                        result = "https://m-aac.cbs.co.kr/gwangju/_definst_/gwangju.stream/playlist.m3u8";
                         title = '광주';
                         break;
                     case 'jeonnam':
-                        result = "https://aac.cbs.co.kr/jeonnam/_definst_/jeonnam.stream/playlist.m3u8";
+                        result = "https://m-aac.cbs.co.kr/jeonnam/_definst_/jeonnam.stream/playlist.m3u8";
                         title = '전남';
                         break;
                     case 'jeonbuk':
-                        result = "https://aac.cbs.co.kr/jeonbuk/_definst_/jeonbuk.stream/playlist.m3u8";
+                        result = "https://m-aac.cbs.co.kr/jeonbuk/_definst_/jeonbuk.stream/playlist.m3u8";
                         title = '전북';
                         break;
                     case 'daejeon':
-                        result = "https://aac.cbs.co.kr/daejeon/_definst_/daejeon.stream/playlist.m3u8";
+                        result = "https://m-aac.cbs.co.kr/daejeon/_definst_/daejeon.stream/playlist.m3u8";
                         title = '대전';
                         break;
                     case 'cheongju':
-                        result = "https://aac.cbs.co.kr/cheongju/_definst_/cheongju.stream/playlist.m3u8";
+                        result = "https://m-aac.cbs.co.kr/cheongju/_definst_/cheongju.stream/playlist.m3u8";
                         title = '청주';
                         break;
                     case 'chuncheon':
-                        result = "https://aac.cbs.co.kr/chuncheon/_definst_/chuncheon.stream/playlist.m3u8";
+                        result = "https://m-aac.cbs.co.kr/chuncheon/_definst_/chuncheon.stream/playlist.m3u8";
                         title = '춘천';
                         break;
                     case 'jeju':
-                        result = "https://aac.cbs.co.kr/jeju/_definst_/jeju.stream/playlist.m3u8";
+                        result = "https://m-aac.cbs.co.kr/jeju/_definst_/jeju.stream/playlist.m3u8";
                         title = '제주';
                         break;
                     default:
-                        result = "https://aac.cbs.co.kr/cbs981/_definst_/cbs981.stream/playlist.m3u8";
+                        result = "https://m-aac.cbs.co.kr/mweb_cbs981/_definst_/cbs981.stream/playlist.m3u8";
                         title = '';
                         break;
                 }
@@ -466,15 +466,15 @@ export default async function handler(req, res) {
             case 'mfm': // CBS 음악FM
                 switch (city) {
                     case 'busan':
-                        result = "https://aac.cbs.co.kr/busan939/_definst_/busan939.stream/playlist.m3u8";
+                        result = "https://m-aac.cbs.co.kr/busan939/_definst_/busan939.stream/playlist.m3u8";
                         title = '부산';
                         break;
                     case 'daegu':
-                        result = "https://aac.cbs.co.kr/daegu939/_definst_/daegu939.stream/playlist.m3u8";
+                        result = "https://m-aac.cbs.co.kr/daegu939/_definst_/daegu939.stream/playlist.m3u8";
                         title = '대구';
                         break;
                     default:
-                        result = "https://aac.cbs.co.kr/cbs939/_definst_/cbs939.stream/playlist.m3u8";
+                        result = "https://m-aac.cbs.co.kr/mweb_cbs939/_definst_/cbs939.stream/playlist.m3u8";
                         title = '';
                         break;
                 }
